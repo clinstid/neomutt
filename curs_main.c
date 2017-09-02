@@ -55,6 +55,7 @@
 #include "pattern.h"
 #include "protos.h"
 #include "sort.h"
+#include "config/sort.h"
 #include "thread.h"
 #ifdef HAVE_NCURSESW_NCURSES_H
 #include <ncursesw/term.h>

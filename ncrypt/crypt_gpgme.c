@@ -69,6 +69,7 @@
 #include "protos.h"
 #include "rfc822.h"
 #include "sort.h"
+#include "config/sort.h"
 #include "state.h"
 
 /* Values used for comparing addresses. */
