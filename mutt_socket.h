@@ -44,7 +44,7 @@ TAILQ_HEAD(ConnectionList, Connection);
  */
 struct Connection
 {
-  struct Account account;
+  struct Account0 account;
   unsigned int ssf; /**< security strength factor, in bits */
   void *data;
 
@@ -77,7 +77,7 @@ int mutt_socket_write_d(struct Connection *conn, const char *buf, int len, int d
 /* stupid hack for imap_logout_all */
 struct ConnectionList *mutt_socket_head(void);
 void mutt_socket_free(struct Connection *conn);
-struct Connection *mutt_conn_find(const struct Connection *start, const struct Account *account);
+struct Connection *mutt_conn_find(const struct Connection *start, const struct Account0 *account);
 
 int raw_socket_read(struct Connection *conn, char *buf, size_t len);
 int raw_socket_write(struct Connection *conn, const char *buf, size_t count);
