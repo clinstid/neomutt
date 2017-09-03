@@ -20,13 +20,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stddef.h>
-
 #include "config.h"
+#include <stddef.h>
+#include <string.h>
 #include "lib/hash.h"
+#include "lib/memory.h"
 #include "lib/string2.h"
-#include "globals.h"
 #include "mutt_tags.h"
+#include "globals.h"
 #include "queue.h"
 
 /**

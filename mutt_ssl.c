@@ -155,7 +155,7 @@ static int ssl_set_verify_partial(SSL_CTX *ctx)
 #ifdef HAVE_SSL_PARTIAL_CHAIN
   X509_VERIFY_PARAM *param = NULL;
 
-  if (option(OPT_SSL_VERIFY_PARTIAL_CHAINS))
+  if (OPT_SSL_VERIFY_PARTIAL_CHAINS)
   {
     param = X509_VERIFY_PARAM_new();
     if (param)
@@ -417,7 +417,7 @@ static bool compare_certificates(X509 *cert, X509 *peercert,
 
 static bool check_certificate_expiration(X509 *peercert, bool silent)
 {
-  if (option(OPT_SSL_VERIFY_DATES) != MUTT_NO)
+  if (OPT_SSL_VERIFY_DATES != MUTT_NO)
   {
     if (X509_cmp_current_time(X509_get_notBefore(peercert)) >= 0)
     {
@@ -847,7 +847,7 @@ static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int al
 
 /* The leaf/host certificate can't be skipped. */
 #ifdef HAVE_SSL_PARTIAL_CHAIN
-  if ((idx != 0) && (option(OPT_SSL_VERIFY_PARTIAL_CHAINS)))
+  if ((idx != 0) && (OPT_SSL_VERIFY_PARTIAL_CHAINS))
     allow_skip = 1;
 #endif
 
@@ -889,7 +889,7 @@ static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int al
   menu->help = helpstr;
 
   done = 0;
-  set_option(OPT_IGNORE_MACRO_EVENTS);
+  OPT_IGNORE_MACRO_EVENTS = true;
   while (!done)
   {
     switch (mutt_menu_loop(menu))
@@ -933,7 +933,7 @@ static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int al
         break;
     }
   }
-  unset_option(OPT_IGNORE_MACRO_EVENTS);
+  OPT_IGNORE_MACRO_EVENTS = false;
   mutt_pop_current_menu(menu);
   mutt_menu_destroy(&menu);
   mutt_debug(2, "ssl interactive_check_cert: done=%d\n", done);
@@ -999,7 +999,7 @@ static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
    * a second time with preverify_ok = 1.  Don't show it or the user
    * will think their "s" key is broken.
    */
-  if (option(OPT_SSL_VERIFY_PARTIAL_CHAINS))
+  if (OPT_SSL_VERIFY_PARTIAL_CHAINS)
   {
     if (skip_mode && preverify_ok && (pos == last_pos) && last_cert)
     {
@@ -1030,7 +1030,7 @@ static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
 
   /* check hostname only for the leaf certificate */
   buf[0] = 0;
-  if (pos == 0 && option(OPT_SSL_VERIFY_HOST) != MUTT_NO)
+  if (pos == 0 && OPT_SSL_VERIFY_HOST != MUTT_NO)
   {
     if (!check_host(cert, host, buf, sizeof(buf)))
     {
@@ -1168,7 +1168,7 @@ static int ssl_socket_open(struct Connection *conn)
   }
 
   /* disable SSL protocols as needed */
-  if (!option(OPT_SSL_USE_TLSV1))
+  if (!OPT_SSL_USE_TLSV1)
   {
     SSL_CTX_set_options(data->ctx, SSL_OP_NO_TLSv1);
   }
@@ -1176,27 +1176,27 @@ static int ssl_socket_open(struct Connection *conn)
    * as Fedora 17 are on OpenSSL 1.0.0.
    */
 #ifdef SSL_OP_NO_TLSv1_1
-  if (!option(OPT_SSL_USE_TLSV1_1))
+  if (!OPT_SSL_USE_TLSV1_1)
   {
     SSL_CTX_set_options(data->ctx, SSL_OP_NO_TLSv1_1);
   }
 #endif
 #ifdef SSL_OP_NO_TLSv1_2
-  if (!option(OPT_SSL_USE_TLSV1_2))
+  if (!OPT_SSL_USE_TLSV1_2)
   {
     SSL_CTX_set_options(data->ctx, SSL_OP_NO_TLSv1_2);
   }
 #endif
-  if (!option(OPT_SSL_USE_SSLV2))
+  if (!OPT_SSL_USE_SSLV2)
   {
     SSL_CTX_set_options(data->ctx, SSL_OP_NO_SSLv2);
   }
-  if (!option(OPT_SSL_USE_SSLV3))
+  if (!OPT_SSL_USE_SSLV3)
   {
     SSL_CTX_set_options(data->ctx, SSL_OP_NO_SSLv3);
   }
 
-  if (option(OPT_SSL_USESYSTEMCERTS))
+  if (OPT_SSL_USESYSTEMCERTS)
   {
     if (!SSL_CTX_set_default_verify_paths(data->ctx))
     {
@@ -1267,15 +1267,15 @@ int mutt_ssl_starttls(struct Connection *conn)
     goto bail_ssldata;
   }
 #ifdef SSL_OP_NO_TLSv1_2
-  if (!option(OPT_SSL_USE_TLSV1_2))
+  if (!OPT_SSL_USE_TLSV1_2)
     ssl_options |= SSL_OP_NO_TLSv1_2;
 #endif
 #ifdef SSL_OP_NO_TLSv1_1
-  if (!option(OPT_SSL_USE_TLSV1_1))
+  if (!OPT_SSL_USE_TLSV1_1)
     ssl_options |= SSL_OP_NO_TLSv1_1;
 #endif
 #ifdef SSL_OP_NO_TLSv1
-  if (!option(OPT_SSL_USE_TLSV1))
+  if (!OPT_SSL_USE_TLSV1)
     ssl_options |= SSL_OP_NO_TLSv1;
 #endif
 /* these are always set */
@@ -1291,7 +1291,7 @@ int mutt_ssl_starttls(struct Connection *conn)
     goto bail_ctx;
   }
 
-  if (option(OPT_SSL_USESYSTEMCERTS))
+  if (OPT_SSL_USESYSTEMCERTS)
   {
     if (!SSL_CTX_set_default_verify_paths(ssldata->ctx))
     {
