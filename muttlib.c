@@ -796,7 +796,7 @@ void mutt_save_path(char *d, size_t dsize, struct Address *a)
   if (a && a->mailbox)
   {
     strfcpy(d, a->mailbox, dsize);
-    if (!OPT_SAVE_ADDRESS)
+    if (!SaveAddress)
     {
       char *p = NULL;
 
@@ -943,7 +943,7 @@ void mutt_expando_format(char *dest, size_t destlen, size_t col, int cols,
 
   prefix[0] = '\0';
   destlen--; /* save room for the terminal \0 */
-  wlen = ((flags & MUTT_FORMAT_ARROWCURSOR) && OPT_ARROW_CURSOR) ? 3 : 0;
+  wlen = ((flags & MUTT_FORMAT_ARROWCURSOR) && ArrowCursor) ? 3 : 0;
   col += wlen;
 
   if ((flags & MUTT_FORMAT_NOFILTER) == 0)
@@ -1012,7 +1012,7 @@ void mutt_expando_format(char *dest, size_t destlen, size_t col, int cols,
 
       col -= wlen; /* reset to passed in value */
       wptr = dest; /* reset write ptr */
-      wlen = ((flags & MUTT_FORMAT_ARROWCURSOR) && OPT_ARROW_CURSOR) ? 3 : 0;
+      wlen = ((flags & MUTT_FORMAT_ARROWCURSOR) && ArrowCursor) ? 3 : 0;
       pid = mutt_create_filter(command->data, NULL, &filter, NULL);
       if (pid != -1)
       {
@@ -1284,7 +1284,7 @@ void mutt_expando_format(char *dest, size_t destlen, size_t col, int cols,
           else if (soft && pad < 0)
           {
             int offset =
-                ((flags & MUTT_FORMAT_ARROWCURSOR) && OPT_ARROW_CURSOR) ? 3 : 0;
+                ((flags & MUTT_FORMAT_ARROWCURSOR) && ArrowCursor) ? 3 : 0;
             int avail_cols = (cols > offset) ? (cols - offset) : 0;
             /* \0-terminate dest for length computation in mutt_wstr_trunc() */
             *wptr = 0;
@@ -1494,7 +1494,7 @@ int mutt_save_confirm(const char *s, struct stat *st)
 
   if (magic > 0 && !mx_access(s, W_OK))
   {
-    if (OPT_CONFIRMAPPEND)
+    if (Confirmappend)
     {
       snprintf(tmp, sizeof(tmp), _("Append messages to %s?"), s);
       rc = mutt_yesorno(tmp, MUTT_YES);
@@ -1529,7 +1529,7 @@ int mutt_save_confirm(const char *s, struct stat *st)
     /* pathname does not exist */
     if (errno == ENOENT)
     {
-      if (OPT_CONFIRMCREATE)
+      if (Confirmcreate)
       {
         snprintf(tmp, sizeof(tmp), _("Create %s?"), s);
         rc = mutt_yesorno(tmp, MUTT_YES);
@@ -1539,7 +1539,7 @@ int mutt_save_confirm(const char *s, struct stat *st)
           ret = -1;
       }
 
-      /* user confirmed with MUTT_YES or set OPT_CONFIRMCREATE */
+      /* user confirmed with MUTT_YES or set Confirmcreate */
       if (ret == 0)
       {
         strncpy(tmp, s, sizeof(tmp) - 1);

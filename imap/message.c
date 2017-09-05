@@ -195,7 +195,7 @@ static char *msg_parse_flags(struct ImapHeader *h, char *s)
     else if (mutt_strncasecmp("old", s, 3) == 0)
     {
       s += 3;
-      hd->old = OPT_MARK_OLD ? true : false;
+      hd->old = MarkOld ? true : false;
     }
     else
     {
@@ -931,7 +931,7 @@ int imap_fetch_message(struct Context *ctx, struct Message *msg, int msgno)
 
   snprintf(buf, sizeof(buf), "UID FETCH %u %s", HEADER_DATA(h)->uid,
            (mutt_bit_isset(idata->capabilities, IMAP4REV1) ?
-                (OPT_IMAP_PEEK ? "BODY.PEEK[]" : "BODY[]") :
+                (ImapPeek ? "BODY.PEEK[]" : "BODY[]") :
                 "RFC822"));
 
   imap_cmd_start(idata, buf);
@@ -1342,7 +1342,7 @@ int imap_copy_messages(struct Context *ctx, struct Header *h, char *dest, int de
         break;
       mutt_debug(3, "imap_copy_messages: server suggests TRYCREATE\n");
       snprintf(prompt, sizeof(prompt), _("Create %s?"), mbox);
-      if (OPT_CONFIRMCREATE && mutt_yesorno(prompt, 1) != MUTT_YES)
+      if (Confirmcreate && mutt_yesorno(prompt, 1) != MUTT_YES)
       {
         mutt_clear_error();
         goto out;
@@ -1370,7 +1370,7 @@ int imap_copy_messages(struct Context *ctx, struct Header *h, char *dest, int de
         {
           mutt_set_flag(ctx, ctx->hdrs[i], MUTT_DELETE, 1);
           mutt_set_flag(ctx, ctx->hdrs[i], MUTT_PURGE, 1);
-          if (OPT_DELETE_UNTAG)
+          if (DeleteUntag)
             mutt_set_flag(ctx, ctx->hdrs[i], MUTT_TAG, 0);
         }
       }
@@ -1379,7 +1379,7 @@ int imap_copy_messages(struct Context *ctx, struct Header *h, char *dest, int de
     {
       mutt_set_flag(ctx, h, MUTT_DELETE, 1);
       mutt_set_flag(ctx, h, MUTT_PURGE, 1);
-      if (OPT_DELETE_UNTAG)
+      if (DeleteUntag)
         mutt_set_flag(ctx, h, MUTT_TAG, 0);
     }
   }

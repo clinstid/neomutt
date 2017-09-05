@@ -521,7 +521,7 @@ int mutt_view_attachment(FILE *fp, struct Body *a, int flag, struct Header *hdr,
                    _("---Command: %-30.30s Attachment: %s"), command, type);
       }
 
-      if ((mutt_wait_filter(thepid) || (entry->needsterminal && OPT_WAIT_KEY)) && !use_pager)
+      if ((mutt_wait_filter(thepid) || (entry->needsterminal && WaitKey)) && !use_pager)
         mutt_any_key_to_continue(NULL);
 
       if (tempfd != -1)
@@ -532,7 +532,7 @@ int mutt_view_attachment(FILE *fp, struct Body *a, int flag, struct Header *hdr,
     else
     {
       /* interactive command */
-      if (mutt_system(command) || (entry->needsterminal && OPT_WAIT_KEY))
+      if (mutt_system(command) || (entry->needsterminal && WaitKey))
         mutt_any_key_to_continue(NULL);
     }
   }
@@ -733,7 +733,7 @@ bail:
   if (mutt_wait_filter(thepid) != 0)
     rv = 0;
 
-  if (rv == 0 || OPT_WAIT_KEY)
+  if (rv == 0 || WaitKey)
     mutt_any_key_to_continue(NULL);
   return rv;
 }
@@ -1038,12 +1038,12 @@ int mutt_print_attachment(FILE *fp, struct Body *a)
       mutt_copy_stream(ifp, fpout);
       safe_fclose(&fpout);
       safe_fclose(&ifp);
-      if (mutt_wait_filter(thepid) || OPT_WAIT_KEY)
+      if (mutt_wait_filter(thepid) || WaitKey)
         mutt_any_key_to_continue(NULL);
     }
     else
     {
-      if (mutt_system(command) || OPT_WAIT_KEY)
+      if (mutt_system(command) || WaitKey)
         mutt_any_key_to_continue(NULL);
     }
 
@@ -1098,7 +1098,7 @@ int mutt_print_attachment(FILE *fp, struct Body *a)
       safe_fclose(&fpout);
       safe_fclose(&ifp);
 
-      if (mutt_wait_filter(thepid) != 0 || OPT_WAIT_KEY)
+      if (mutt_wait_filter(thepid) != 0 || WaitKey)
         mutt_any_key_to_continue(NULL);
       rc = 1;
     }
