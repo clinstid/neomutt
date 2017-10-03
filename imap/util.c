@@ -326,6 +326,7 @@ int imap_parse_path(const char *path, struct ImapMbox *mx)
   {
     if (mutt_account_fromurl(&mx->account, &url) < 0 || !*mx->account.host)
     {
+      url_free(&url);
       FREE(&c);
       return -1;
     }
@@ -335,11 +336,13 @@ int imap_parse_path(const char *path, struct ImapMbox *mx)
     if (url.scheme == U_IMAPS)
       mx->account.flags |= MUTT_ACCT_SSL;
 
+    url_free(&url);
     FREE(&c);
   }
   /* old PINE-compatibility code */
   else
   {
+    url_free(&url);
     FREE(&c);
     if (sscanf(path, "{%127[^}]}", tmp) != 1)
       return -1;
