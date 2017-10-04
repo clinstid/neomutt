@@ -1059,7 +1059,6 @@ int mutt_compose_menu(struct Header *msg, /* structure for new message */
 #endif
       {
         char *prompt = NULL;
-        struct Header *h = NULL;
 
         fname[0] = 0;
         prompt = _("Open mailbox to attach message from");
@@ -1151,11 +1150,10 @@ int mutt_compose_menu(struct Header *msg, /* structure for new message */
 
         for (i = 0; i < Context->msgcount; i++)
         {
-          h = Context->hdrs[i];
-          if (h->tagged)
+          if (message_is_tagged(Context, i))
           {
             new = (struct AttachPtr *) safe_calloc(1, sizeof(struct AttachPtr));
-            new->content = mutt_make_message_attach(Context, h, 1);
+            new->content = mutt_make_message_attach(Context, Context->hdrs[i], 1);
             if (new->content)
               update_idx(menu, actx, new);
             else
