@@ -936,6 +936,9 @@ int mutt_index_menu(void)
     menu->redraw = REDRAW_FULL;
   }
 
+  SigWinch = 0;
+  mutt_folder_hook(Context->path);
+
   while (true)
   {
     /* Clear the tag prefix unless we just started it.  Don't clear
