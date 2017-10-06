@@ -21,6 +21,7 @@
  */
 
 #include "config.h"
+#include "lib/file.h"
 #include "lib/mapping.h"
 #include "lib/memory.h"
 #include "lib/message.h"
@@ -30,6 +31,8 @@
 #include "keymap.h"
 #include "mutt_menu.h"
 #include "opcodes.h"
+#include "pager.h"
+#include "protos.h"
 #include "queue.h"
 
 #include <string.h>
@@ -39,15 +42,16 @@ static TAILQ_HEAD(NotificationsHead,
 
 struct Notification
 {
-  const char *data;
+  const char *head;
+  const char *body;
   TAILQ_ENTRY(Notification) entries;
 };
 
 static const struct Mapping NotificationsHelp[] = {
-  { N_("Exit"), OP_EXIT }, { NULL, 0 },
+  { N_("View"), OP_VIEW_ATTACH }, { N_("Exit"), OP_EXIT }, { NULL, 0 },
 };
 
-static void notifications_entry(char *b, size_t blen, struct Menu *menu, int num)
+static struct Notification *notifications_select(int num)
 {
   size_t i = 0;
   struct Notification *np;
@@ -58,11 +62,41 @@ static void notifications_entry(char *b, size_t blen, struct Menu *menu, int num
       break;
     }
   }
+  return np;
+}
+
+static void notifications_entry(char *b, size_t blen, struct Menu *menu, int num)
+{
+  const struct Notification *np = notifications_select(num);
   if (!np)
   {
     return;
   }
-  snprintf(b, blen, "%s", np->data);
+
+  snprintf(b, blen, "%3d - %s", num + 1 /* 0-based */, np->head);
+}
+
+static void notifications_view(int num)
+{
+  const struct Notification *np = notifications_select(num);
+  if (!np || !np->body)
+  {
+    return;
+  }
+
+  char tempfile[_POSIX_PATH_MAX];
+  mutt_mktemp(tempfile, sizeof(tempfile));
+  FILE *fp = safe_fopen(tempfile, "w");
+  if (!fp)
+  {
+    mutt_perror(_("Failure to open temp file."));
+    return;
+  }
+
+  fprintf(fp, "%s\n\n%s", np->head, np->body);
+  safe_fclose(&fp);
+  mutt_pager(np->head, tempfile, true, NULL);
+  mutt_unlink(tempfile);
 }
 
 void mutt_notifications_show(void)
@@ -95,6 +129,10 @@ void mutt_notifications_show(void)
       op = mutt_menu_loop(menu);
     switch (op)
     {
+      case OP_VIEW_ATTACH:
+        notifications_view(menu->current);
+        menu->redraw = REDRAW_FULL;
+        break;
       case OP_EXIT:
         mutt_pop_current_menu(menu);
         mutt_menu_destroy(&menu);
@@ -108,21 +146,23 @@ void mutt_notifications_show(void)
   /* not reached */
 }
 
-void mutt_notifications_add(const char *s)
+void mutt_notifications_add(const char *head, const char *body, bool copy)
 {
-  if (!s || !*s)
+  if (!head || !*head)
     return;
 
   struct Notification *np;
   TAILQ_FOREACH(np, &Notifications, entries)
   {
-    if (strcmp(s, np->data) == 0)
+    if (strcmp(head, np->head) == 0)
     {
       return;
     }
   }
+
   np = safe_calloc(1, sizeof(struct Notification));
-  np->data = safe_strdup(s);
+  np->head = safe_strdup(head);
+  np->body = copy ? safe_strdup(body) : body;
   TAILQ_INSERT_TAIL(&Notifications, np, entries);
 }
 
