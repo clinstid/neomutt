@@ -32,7 +32,8 @@
 #include <time.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "account.h"
+#include "conn/account.h"
+#include "mutt_account.h"
 #include "globals.h"
 #include "keymap.h"
 #include "mutt_menu.h"
@@ -41,6 +42,8 @@
 #include "opcodes.h"
 #include "options.h"
 #include "protos.h"
+#include "conn/connection.h"
+#include "conn/socket.h"
 
 /* certificate error bitmap values */
 #define CERTERR_VALID 0

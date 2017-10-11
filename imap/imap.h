@@ -26,7 +26,7 @@
 
 #include <stddef.h>
 #include <sys/types.h>
-#include "account.h"
+#include "conn/account.h"
 
 struct Header;
 struct Pattern;

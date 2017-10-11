@@ -26,9 +26,11 @@
 #include <string.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "account.h"
+#include "conn/account.h"
+#include "mutt_account.h"
 #include "globals.h"
-#include "conn/mutt_socket.h"
+#include "conn/socket.h"
+#include "mutt_socket.h"
 #include "options.h"
 #include "pop.h"
 #include "protos.h"
@@ -36,7 +38,7 @@
 #ifdef USE_SASL
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>
-#include "conn/mutt_sasl.h"
+#include "conn/sasl.h"
 #endif
 
 #ifdef USE_SASL

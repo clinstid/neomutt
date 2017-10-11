@@ -32,9 +32,11 @@
 #include <unistd.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "mutt_tunnel.h"
+#include "conn/tunnel.h"
+#include "conn/connection.h"
 #include "account.h"
 #include "globals.h"
+#include "conn/socket.h"
 #include "mutt_socket.h"
 #include "protos.h"
 

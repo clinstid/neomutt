@@ -41,7 +41,7 @@
 #include <unistd.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "account.h"
+#include "conn/account.h"
 #include "attach.h"
 #include "body.h"
 #include "browser.h"
@@ -56,7 +56,7 @@
 #include "mutt_curses.h"
 #include "mutt_menu.h"
 #include "mutt_regex.h"
-#include "conn/mutt_socket.h"
+#include "conn/socket.h"
 #include "mx.h"
 #include "opcodes.h"
 #include "options.h"

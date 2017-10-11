@@ -1,9 +1,9 @@
 /**
  * @file
- * Handling of OpenSSL encryption
+ * Account object
  *
  * @authors
- * Copyright (C) 1999-2000 Tommi Komulainen <Tommi.Komulainen@iki.fi>
+ * Copyright (C) 2000-2005,2008 Brendan Cully <brendan@kublai.com>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -20,14 +20,21 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MUTT_SSL_H
-#define _MUTT_SSL_H
+#ifndef _CONN_ACCOUNT_H
+#define _CONN_ACCOUNT_H
 
-#ifdef USE_SSL
-struct Connection;
+/**
+ * struct Account - Login details for a remote server
+ */
+struct Account
+{
+  char user[64];
+  char login[64];
+  char pass[256];
+  char host[128];
+  unsigned short port;
+  unsigned char type;
+  unsigned char flags;
+};
 
-int mutt_ssl_starttls(struct Connection *conn);
-int mutt_ssl_socket_setup(struct Connection *conn);
-#endif
-
-#endif /* _MUTT_SSL_H */
+#endif /* _CONN_ACCOUNT_H */

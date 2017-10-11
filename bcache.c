@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include "lib/lib.h"
 #include "bcache.h"
-#include "account.h"
+#include "mutt_account.h"
 #include "globals.h"
 #include "protos.h"
 #include "url.h"

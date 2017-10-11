@@ -30,18 +30,20 @@
 #include <string.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "account.h"
+#include "conn/account.h"
+#include "mutt_account.h"
 #include "context.h"
 #include "globals.h"
 #include "header.h"
 #include "mutt_curses.h"
-#include "conn/mutt_socket.h"
+#include "conn/socket.h"
+#include "mutt_socket.h"
 #include "options.h"
 #include "pop.h"
 #include "protos.h"
 #include "url.h"
 #ifdef USE_SSL
-#include "conn/mutt_ssl.h"
+#include "conn/ssl.h"
 #endif
 
 /**

@@ -33,23 +33,25 @@
 #include <unistd.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "account.h"
+#include "conn/account.h"
+#include "mutt_account.h"
 #include "address.h"
 #include "globals.h"
 #include "mutt_curses.h"
-#include "conn/mutt_socket.h"
+#include "conn/socket.h"
+#include "mutt_socket.h"
 #include "options.h"
 #include "protos.h"
 #include "url.h"
 #ifdef USE_SSL
-#include "conn/mutt_ssl.h"
+#include "conn/ssl.h"
 #endif
 #ifdef USE_SASL
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>
-#include "conn/mutt_sasl.h"
+#include "conn/sasl.h"
 #else
-#include "conn/mutt_sasl_plain.h"
+#include "conn/sasl_plain.h"
 #endif
 
 #define smtp_success(x) ((x) / 100 == 2)

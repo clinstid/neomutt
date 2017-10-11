@@ -35,18 +35,16 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include "mutt_socket.h"
+#include "conn/connection.h"
 #include "globals.h"
 #include "mutt_idna.h"
-#include "mutt_tunnel.h"
+#include "conn/tunnel.h"
 #include "options.h"
 #include "protos.h"
 #include "url.h"
 #ifdef USE_SSL
-#include "mutt_ssl.h"
+#include "conn/ssl.h"
 #endif
-
-/* support for multiple socket connections */
-static struct ConnectionList Connections = TAILQ_HEAD_INITIALIZER(Connections);
 
 static int socket_preconnect(void)
 {
@@ -218,101 +216,15 @@ int mutt_socket_readln_d(char *buf, size_t buflen, struct Connection *conn, int 
   return i + 1;
 }
 
-struct ConnectionList *mutt_socket_head(void)
-{
-  return &Connections;
-}
-
-/**
- * mutt_socket_free - remove connection from connection list and free it
- */
-void mutt_socket_free(struct Connection *conn)
-{
-  struct Connection *np = NULL;
-  TAILQ_FOREACH(np, &Connections, entries)
-  {
-    if (np == conn)
-    {
-      TAILQ_REMOVE(&Connections, np, entries);
-      FREE(&np);
-      return;
-    }
-  }
-}
-
 /**
  * socket_new_conn - allocate and initialise a new connection
  */
-static struct Connection *socket_new_conn(void)
+struct Connection *socket_new_conn(void)
 {
   struct Connection *conn = NULL;
 
   conn = safe_calloc(1, sizeof(struct Connection));
   conn->fd = -1;
-
-  return conn;
-}
-
-/**
- * mutt_conn_find - Find a connection from a list
- *
- * find a connection off the list of connections whose account matches account.
- * If start is not null, only search for connections after the given connection
- * (allows higher level socket code to make more fine-grained searches than
- * account info - eg in IMAP we may wish to find a connection which is not in
- * IMAP_SELECTED state)
- */
-struct Connection *mutt_conn_find(const struct Connection *start, const struct Account *account)
-{
-  struct Connection *conn = NULL;
-  struct Url url;
-  char hook[LONG_STRING];
-
-  /* account isn't actually modified, since url isn't either */
-  mutt_account_tourl((struct Account *) account, &url);
-  url.path = NULL;
-  url_tostring(&url, hook, sizeof(hook), 0);
-  mutt_account_hook(hook);
-
-  conn = start ? TAILQ_NEXT(start, entries) : TAILQ_FIRST(&Connections);
-  while (conn)
-  {
-    if (mutt_account_match(account, &(conn->account)))
-      return conn;
-    conn = TAILQ_NEXT(conn, entries);
-  }
-
-  conn = socket_new_conn();
-  memcpy(&conn->account, account, sizeof(struct Account));
-
-  TAILQ_INSERT_HEAD(&Connections, conn, entries);
-
-  if (Tunnel && *Tunnel)
-    mutt_tunnel_socket_setup(conn);
-  else if (account->flags & MUTT_ACCT_SSL)
-  {
-#ifdef USE_SSL
-    if (mutt_ssl_socket_setup(conn) < 0)
-    {
-      mutt_socket_free(conn);
-      return NULL;
-    }
-#else
-    mutt_error(_("SSL is unavailable."));
-    mutt_sleep(2);
-    mutt_socket_free(conn);
-
-    return NULL;
-#endif
-  }
-  else
-  {
-    conn->conn_read = raw_socket_read;
-    conn->conn_write = raw_socket_write;
-    conn->conn_open = raw_socket_open;
-    conn->conn_close = raw_socket_close;
-    conn->conn_poll = raw_socket_poll;
-  }
 
   return conn;
 }

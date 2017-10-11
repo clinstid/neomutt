@@ -30,7 +30,8 @@
 #include "lib/lib.h"
 #include "mutt.h"
 #include "nntp.h"
-#include "account.h"
+#include "conn/account.h"
+#include "mutt_account.h"
 #include "bcache.h"
 #include "body.h"
 #include "context.h"
@@ -39,7 +40,8 @@
 #include "header.h"
 #include "mailbox.h"
 #include "mutt_curses.h"
-#include "conn/mutt_socket.h"
+#include "conn/socket.h"
+#include "mutt_socket.h"
 #include "mx.h"
 #include "ncrypt/ncrypt.h"
 #include "options.h"
@@ -47,7 +49,7 @@
 #include "thread.h"
 #include "url.h"
 #ifdef USE_SSL
-#include "conn/mutt_ssl.h"
+#include "conn/ssl.h"
 #endif
 #ifdef USE_HCACHE
 #include "hcache/hcache.h"
@@ -55,7 +57,7 @@
 #ifdef USE_SASL
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>
-#include "conn/mutt_sasl.h"
+#include "conn/sasl.h"
 #endif
 
 static int nntp_connect_error(struct NntpServer *nserv)

@@ -30,8 +30,9 @@
 #include <string.h>
 #include <sys/socket.h>
 #include "lib/lib.h"
-#include "mutt_sasl.h"
-#include "account.h"
+#include "conn/sasl.h"
+#include "conn/connection.h"
+#include "mutt_account.h"
 #include "mutt_socket.h"
 #include "options.h"
 #include "protos.h"
