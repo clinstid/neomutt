@@ -51,7 +51,7 @@
 #include "mutt_curses.h"
 #include "mutt_idna.h"
 #include "mutt_regex.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "ncrypt/ncrypt.h"
 #include "options.h"
 #include "protos.h"
@@ -62,7 +62,7 @@
 #include "sidebar.h"
 #endif
 #ifdef USE_SASL
-#include "mutt_sasl.h"
+#include "conn/mutt_sasl.h"
 #endif
 #ifdef USE_IMAP
 #include "imap/imap.h"

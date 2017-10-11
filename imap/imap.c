@@ -49,7 +49,7 @@
 #include "mailbox.h"
 #include "message.h"
 #include "mutt_curses.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "mutt_tags.h"
 #include "mx.h"
 #include "options.h"
@@ -61,7 +61,7 @@
 #include "hcache/hcache.h"
 #endif
 #ifdef USE_SSL
-#include "mutt_ssl.h"
+#include "conn/mutt_ssl.h"
 #endif
 
 /* imap forward declarations */

@@ -37,19 +37,19 @@
 #include "address.h"
 #include "globals.h"
 #include "mutt_curses.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "options.h"
 #include "protos.h"
 #include "url.h"
 #ifdef USE_SSL
-#include "mutt_ssl.h"
+#include "conn/mutt_ssl.h"
 #endif
 #ifdef USE_SASL
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>
-#include "mutt_sasl.h"
+#include "conn/mutt_sasl.h"
 #else
-#include "mutt_sasl_plain.h"
+#include "conn/mutt_sasl_plain.h"
 #endif
 
 #define smtp_success(x) ((x) / 100 == 2)

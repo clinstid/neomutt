@@ -29,8 +29,8 @@
 #include "account.h"
 #include "auth.h"
 #include "globals.h"
-#include "mutt_sasl_plain.h"
-#include "mutt_socket.h"
+#include "conn/mutt_sasl_plain.h"
+#include "conn/mutt_socket.h"
 #include "protos.h"
 
 /**

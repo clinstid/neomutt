@@ -47,7 +47,7 @@
 #include "imap/imap.h"
 #include "mailbox.h"
 #include "message.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "mx.h"
 #include "options.h"
 #include "protos.h"

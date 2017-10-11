@@ -28,7 +28,7 @@
 #include "mutt.h"
 #include "account.h"
 #include "globals.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "options.h"
 #include "pop.h"
 #include "protos.h"
@@ -36,7 +36,7 @@
 #ifdef USE_SASL
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>
-#include "mutt_sasl.h"
+#include "conn/mutt_sasl.h"
 #endif
 
 #ifdef USE_SASL

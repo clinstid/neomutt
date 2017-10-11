@@ -33,8 +33,8 @@
 #include "account.h"
 #include "auth.h"
 #include "globals.h"
-#include "mutt_sasl.h"
-#include "mutt_socket.h"
+#include "conn/mutt_sasl.h"
+#include "conn/mutt_socket.h"
 #include "options.h"
 #include "protos.h"
 

@@ -56,7 +56,7 @@
 #include "mutt_curses.h"
 #include "mutt_menu.h"
 #include "mutt_regex.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "mx.h"
 #include "opcodes.h"
 #include "options.h"

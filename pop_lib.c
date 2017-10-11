@@ -35,13 +35,13 @@
 #include "globals.h"
 #include "header.h"
 #include "mutt_curses.h"
-#include "mutt_socket.h"
+#include "conn/mutt_socket.h"
 #include "options.h"
 #include "pop.h"
 #include "protos.h"
 #include "url.h"
 #ifdef USE_SSL
-#include "mutt_ssl.h"
+#include "conn/mutt_ssl.h"
 #endif
 
 /**
