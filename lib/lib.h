@@ -35,6 +35,7 @@
  * -# @subpage exit
  * -# @subpage file
  * -# @subpage hash
+ * -# @subpage list
  * -# @subpage mapping
  * -# @subpage md5
  * -# @subpage memory
