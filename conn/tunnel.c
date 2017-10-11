@@ -38,9 +38,9 @@
 #include "tunnel.h"
 #include "account.h"
 #include "connection.h"
-#include "globals.h"
 #include "protos.h"
 #include "socket.h"
+#include "conn/conn_globals.h"
 
 /**
  * struct TunnelData - A network tunnel (pair of sockets)

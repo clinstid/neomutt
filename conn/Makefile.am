@@ -9,7 +9,7 @@ AM_CPPFLAGS = -I$(top_srcdir)
 
 noinst_LIBRARIES = libconn.a
 
-libconn_a_SOURCES = getdomain.c sasl_plain.c socket.c tunnel.c
+libconn_a_SOURCES = conn_globals.c getdomain.c sasl_plain.c socket.c tunnel.c
 
 if USE_SASL
 libconn_a_SOURCES += sasl.o

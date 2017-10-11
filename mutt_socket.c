@@ -33,6 +33,8 @@
 #include "mutt_account.h"
 #include "protos.h"
 #include "url.h"
+#include "globals.h"
+#include "conn/conn_globals.h"
 
 /* support for multiple socket connections */
 static struct ConnectionList Connections = TAILQ_HEAD_INITIALIZER(Connections);

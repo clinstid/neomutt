@@ -42,9 +42,10 @@
 #include "lib/string2.h"
 #include "account.h"
 #include "connection.h"
-#include "globals.h"
 #include "options.h"
 #include "protos.h"
+#include "globals.h"
+#include "conn/conn_globals.h"
 #ifdef USE_SSL
 #include "ssl.h"
 #endif

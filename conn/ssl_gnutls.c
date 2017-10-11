@@ -40,7 +40,6 @@
 #include "mutt.h"
 #include "account.h"
 #include "connection.h"
-#include "globals.h"
 #include "keymap.h"
 #include "mutt_account.h"
 #include "mutt_menu.h"
@@ -48,6 +47,7 @@
 #include "opcodes.h"
 #include "options.h"
 #include "protos.h"
+#include "conn/conn_globals.h"
 #include "socket.h"
 
 /* certificate error bitmap values */
