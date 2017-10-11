@@ -28,9 +28,9 @@
 #include "conn/connection.h"
 #include "conn/ssl.h"
 #include "conn/tunnel.h"
+#include "mutt_socket.h"
 #include "globals.h"
 #include "mutt_account.h"
-#include "mutt_socket.h"
 #include "protos.h"
 #include "url.h"
 
@@ -122,4 +122,3 @@ struct Connection *mutt_conn_find(const struct Connection *start, const struct A
 
   return conn;
 }
-

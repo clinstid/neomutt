@@ -35,11 +35,11 @@
 #include "lib/memory.h"
 #include "lib/message.h"
 #include "lib/string2.h"
-#include "connection.h"
 #include "sasl.h"
 #include "account.h"
-#include "options.h"
+#include "connection.h"
 #include "mutt_account.h"
+#include "options.h"
 #include "protos.h"
 
 static int getnameinfo_err(int ret)

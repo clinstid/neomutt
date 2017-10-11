@@ -34,7 +34,7 @@
 #include <time.h>
 #include "imap_private.h"
 #include "lib/lib.h"
-#include "mutt_account.h"
+#include "conn/connection.h"
 #include "buffy.h"
 #include "context.h"
 #include "globals.h"
@@ -42,12 +42,12 @@
 #include "imap/imap.h"
 #include "mailbox.h"
 #include "message.h"
+#include "mutt_account.h"
 #include "mutt_menu.h"
 #include "mutt_socket.h"
 #include "mx.h"
 #include "options.h"
 #include "protos.h"
-#include "conn/connection.h"
 #include "url.h"
 
 #define IMAP_CMD_BUFSIZE 512

@@ -33,9 +33,9 @@
 #include <time.h>
 #include <unistd.h>
 #include "lib/lib.h"
+#include "conn/connection.h"
 #include "mutt.h"
 #include "bcache.h"
-#include "conn/connection.h"
 #include "context.h"
 #include "format_flags.h"
 #include "globals.h"

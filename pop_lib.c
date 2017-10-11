@@ -29,12 +29,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lib/lib.h"
-#include "mutt.h"
-#include "mutt_account.h"
 #include "conn/connection.h"
+#include "mutt.h"
 #include "context.h"
 #include "globals.h"
 #include "header.h"
+#include "mutt_account.h"
 #include "mutt_curses.h"
 #include "mutt_socket.h"
 #include "options.h"

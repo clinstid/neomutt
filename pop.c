@@ -29,9 +29,9 @@
 #include <string.h>
 #include <unistd.h>
 #include "lib/lib.h"
+#include "conn/connection.h"
 #include "mutt.h"
 #include "pop.h"
-#include "mutt_account.h"
 #include "bcache.h"
 #include "body.h"
 #include "context.h"
@@ -39,13 +39,13 @@
 #include "globals.h"
 #include "header.h"
 #include "mailbox.h"
+#include "mutt_account.h"
 #include "mutt_curses.h"
 #include "mutt_socket.h"
 #include "mx.h"
 #include "ncrypt/ncrypt.h"
 #include "options.h"
 #include "protos.h"
-#include "conn/connection.h"
 #include "url.h"
 #ifdef USE_HCACHE
 #include "hcache/hcache.h"

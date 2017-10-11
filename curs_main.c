@@ -32,6 +32,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lib/lib.h"
+#include "conn/connection.h"
+#include "conn/socket.h"
 #include "mutt.h"
 #include "alias.h"
 #include "body.h"
@@ -44,9 +46,7 @@
 #include "keymap.h"
 #include "mailbox.h"
 #include "mutt_curses.h"
-#include "conn/connection.h"
 #include "mutt_menu.h"
-#include "conn/socket.h"
 #include "mutt_tags.h"
 #include "mx.h"
 #include "ncrypt/ncrypt.h"

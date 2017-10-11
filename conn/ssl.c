@@ -46,16 +46,16 @@
 #include "lib/memory.h"
 #include "lib/message.h"
 #include "lib/string2.h"
-#include "connection.h"
-#include "socket.h"
 #include "mutt.h"
-#include "account.h"
 #include "ssl.h"
+#include "account.h"
+#include "connection.h"
 #include "globals.h"
 #include "keymap.h"
 #include "mutt_menu.h"
 #include "opcodes.h"
 #include "options.h"
+#include "socket.h"
 
 /* Just in case OpenSSL doesn't define DEVRANDOM */
 #ifndef DEVRANDOM

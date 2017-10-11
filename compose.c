@@ -33,6 +33,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "lib/lib.h"
+#include "conn/connection.h"
+#include "conn/socket.h"
 #include "mutt.h"
 #include "alias.h"
 #include "attach.h"
@@ -49,8 +51,6 @@
 #include "mutt_curses.h"
 #include "mutt_idna.h"
 #include "mutt_menu.h"
-#include "conn/socket.h"
-#include "conn/connection.h"
 #include "mx.h"
 #include "ncrypt/ncrypt.h"
 #include "opcodes.h"

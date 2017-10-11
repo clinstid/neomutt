@@ -38,6 +38,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "lib/lib.h"
+#include "conn/connection.h"
 #include "mutt.h"
 #include "address.h"
 #include "alias.h"
@@ -58,7 +59,6 @@
 #include "rfc822.h"
 #include "url.h"
 #include "version.h"
-#include "conn/connection.h"
 #ifdef USE_SIDEBAR
 #include "sidebar.h"
 #endif

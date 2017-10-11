@@ -36,11 +36,11 @@
 #include "lib/string2.h"
 #include "mutt.h"
 #include "tunnel.h"
-#include "connection.h"
 #include "account.h"
+#include "connection.h"
 #include "globals.h"
-#include "socket.h"
 #include "protos.h"
+#include "socket.h"
 
 /**
  * struct TunnelData - A network tunnel (pair of sockets)

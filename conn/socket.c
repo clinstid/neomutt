@@ -23,13 +23,13 @@
  */
 
 #include "config.h"
-#include <idna.h>
-#include <stdbool.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <idna.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <signal.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/select.h>
@@ -40,8 +40,8 @@
 #include "lib/memory.h"
 #include "lib/message.h"
 #include "lib/string2.h"
-#include "conn/connection.h"
-#include "conn/account.h"
+#include "account.h"
+#include "connection.h"
 #include "globals.h"
 #include "options.h"
 #include "protos.h"

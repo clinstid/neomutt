@@ -29,12 +29,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "imap_private.h"
-#include "conn/connection.h"
 #include "lib/lib.h"
-#include "mutt_account.h"
+#include "conn/connection.h"
+#include "conn/sasl.h"
 #include "auth.h"
 #include "globals.h"
-#include "conn/sasl.h"
+#include "mutt_account.h"
 #include "mutt_socket.h"
 #include "options.h"
 #include "protos.h"
@@ -72,7 +72,8 @@ enum ImapAuthRes imap_auth_sasl(struct ImapData *idata, const char *method)
      * 2. attempt sasl_client_start with only "AUTH=ANONYMOUS" capability
      * 3. if sasl_client_start fails, fall through... */
 
-    if (mutt_account_getuser(&idata->conn->account)) return IMAP_AUTH_FAILURE;
+    if (mutt_account_getuser(&idata->conn->account))
+      return IMAP_AUTH_FAILURE;
 
     if (mutt_bit_isset(idata->capabilities, AUTH_ANON) &&
         (!idata->conn->account.user[0] ||
