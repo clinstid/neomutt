@@ -50,6 +50,7 @@
 #include "mutt_idna.h"
 #include "mutt_menu.h"
 #include "conn/socket.h"
+#include "conn/connection.h"
 #include "mx.h"
 #include "ncrypt/ncrypt.h"
 #include "opcodes.h"

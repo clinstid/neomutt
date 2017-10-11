@@ -34,7 +34,7 @@
 #include "imap_private.h"
 #include "lib/lib.h"
 #include "mutt.h"
-#include "conn/account.h"
+#include "mutt_account.h"
 #include "browser.h"
 #include "buffy.h"
 #include "context.h"

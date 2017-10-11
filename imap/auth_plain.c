@@ -26,12 +26,12 @@
 #include "config.h"
 #include "imap_private.h"
 #include "lib/lib.h"
-#include "conn/account.h"
 #include "mutt_account.h"
 #include "auth.h"
 #include "globals.h"
 #include "conn/sasl_plain.h"
-#include "conn/socket.h"
+#include "mutt_socket.h"
+#include "conn/connection.h"
 #include "protos.h"
 
 /**

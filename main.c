@@ -51,13 +51,14 @@
 #include "mutt_curses.h"
 #include "mutt_idna.h"
 #include "mutt_regex.h"
-#include "conn/socket.h"
+#include "mutt_socket.h"
 #include "ncrypt/ncrypt.h"
 #include "options.h"
 #include "protos.h"
 #include "rfc822.h"
 #include "url.h"
 #include "version.h"
+#include "conn/connection.h"
 #ifdef USE_SIDEBAR
 #include "sidebar.h"
 #endif

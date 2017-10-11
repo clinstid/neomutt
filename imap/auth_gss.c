@@ -27,13 +27,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "imap_private.h"
+#include "conn/connection.h"
 #include "lib/lib.h"
 #include "mutt.h"
-#include "conn/account.h"
 #include "mutt_account.h"
 #include "auth.h"
 #include "globals.h"
-#include "conn/socket.h"
 #include "mutt_socket.h"
 #include "options.h"
 #include "protos.h"

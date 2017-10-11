@@ -26,15 +26,14 @@
 #include <string.h>
 #include "lib/lib.h"
 #include "mutt.h"
-#include "conn/account.h"
 #include "mutt_account.h"
 #include "globals.h"
-#include "conn/socket.h"
 #include "mutt_socket.h"
 #include "options.h"
 #include "pop.h"
 #include "protos.h"
 #include "rfc822.h"
+#include "conn/connection.h"
 #ifdef USE_SASL
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>

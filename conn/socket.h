@@ -28,7 +28,8 @@
 #include "lib/lib.h"
 #include "lib/queue.h"
 #include "account.h"
-#include "connection.h"
+
+struct Connection;
 
 struct Connection *socket_new_conn(void);
 

@@ -24,6 +24,8 @@
 #ifndef _CONN_CONNECTION_H
 #define _CONN_CONNECTION_H
 
+#include <stdio.h>
+#include <time.h>
 #include "lib/queue.h"
 #include "account.h"
 

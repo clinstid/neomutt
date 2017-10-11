@@ -44,6 +44,7 @@
 #include "keymap.h"
 #include "mailbox.h"
 #include "mutt_curses.h"
+#include "conn/connection.h"
 #include "mutt_menu.h"
 #include "conn/socket.h"
 #include "mutt_tags.h"

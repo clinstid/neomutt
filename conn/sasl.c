@@ -26,15 +26,20 @@
 #include <errno.h>
 #include <netdb.h>
 #include <sasl/sasl.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
-#include "lib/lib.h"
-#include "conn/sasl.h"
-#include "conn/connection.h"
-#include "mutt_account.h"
-#include "mutt_socket.h"
+#include <time.h>
+#include "lib/debug.h"
+#include "lib/memory.h"
+#include "lib/message.h"
+#include "lib/string2.h"
+#include "connection.h"
+#include "sasl.h"
+#include "account.h"
 #include "options.h"
+#include "mutt_account.h"
 #include "protos.h"
 
 static int getnameinfo_err(int ret)

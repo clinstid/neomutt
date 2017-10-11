@@ -25,25 +25,30 @@
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
 #include <regex.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
-#include "lib/lib.h"
+#include "lib/date.h"
+#include "lib/debug.h"
+#include "lib/file.h"
+#include "lib/memory.h"
+#include "lib/message.h"
+#include "lib/string2.h"
 #include "mutt.h"
-#include "conn/account.h"
-#include "mutt_account.h"
+#include "account.h"
+#include "connection.h"
+#include "socket.h"
 #include "globals.h"
 #include "keymap.h"
 #include "mutt_menu.h"
 #include "mutt_regex.h"
-#include "mutt_socket.h"
+#include "mutt_account.h"
 #include "opcodes.h"
 #include "options.h"
 #include "protos.h"
-#include "conn/connection.h"
-#include "conn/socket.h"
 
 /* certificate error bitmap values */
 #define CERTERR_VALID 0

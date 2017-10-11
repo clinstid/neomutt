@@ -41,18 +41,21 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "lib/lib.h"
+#include "lib/debug.h"
+#include "lib/file.h"
+#include "lib/memory.h"
+#include "lib/message.h"
+#include "lib/string2.h"
+#include "connection.h"
+#include "socket.h"
 #include "mutt.h"
-#include "mutt_ssl.h"
 #include "account.h"
+#include "ssl.h"
 #include "globals.h"
 #include "keymap.h"
-#include "mutt_idna.h"
 #include "mutt_menu.h"
-#include "mutt_socket.h"
 #include "opcodes.h"
 #include "options.h"
-#include "protos.h"
 
 /* Just in case OpenSSL doesn't define DEVRANDOM */
 #ifndef DEVRANDOM

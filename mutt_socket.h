@@ -24,6 +24,7 @@
 #define _MUTT_SOCKET_H
 
 #include "lib/queue.h"
+#include "conn/socket.h"
 
 struct Account;
 

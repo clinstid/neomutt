@@ -25,14 +25,14 @@
 #include <string.h>
 #include "lib/lib.h"
 #include "lib/queue.h"
-#include "conn/socket.h"
-#include "conn/tunnel.h"
-#include "mutt_socket.h"
-#include "mutt_account.h"
-#include "url.h"
-#include "protos.h"
-#include "globals.h"
+#include "conn/connection.h"
 #include "conn/ssl.h"
+#include "conn/tunnel.h"
+#include "globals.h"
+#include "mutt_account.h"
+#include "mutt_socket.h"
+#include "protos.h"
+#include "url.h"
 
 /* support for multiple socket connections */
 static struct ConnectionList Connections = TAILQ_HEAD_INITIALIZER(Connections);

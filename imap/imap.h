@@ -26,7 +26,7 @@
 
 #include <stddef.h>
 #include <sys/types.h>
-#include "conn/account.h"
+#include "mutt_account.h"
 
 struct Header;
 struct Pattern;

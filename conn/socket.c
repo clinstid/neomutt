@@ -23,6 +23,8 @@
  */
 
 #include "config.h"
+#include <idna.h>
+#include <stdbool.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <netdb.h>
@@ -34,16 +36,17 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include "mutt_socket.h"
+#include "lib/debug.h"
+#include "lib/memory.h"
+#include "lib/message.h"
+#include "lib/string2.h"
 #include "conn/connection.h"
+#include "conn/account.h"
 #include "globals.h"
-#include "mutt_idna.h"
-#include "conn/tunnel.h"
 #include "options.h"
 #include "protos.h"
-#include "url.h"
 #ifdef USE_SSL
-#include "conn/ssl.h"
+#include "ssl.h"
 #endif
 
 static int socket_preconnect(void)
