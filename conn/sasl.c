@@ -20,7 +20,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* common SASL helper routines */
+/**
+ * @page conn_sasl SASL authentication support
+ *
+ * SASL authentication support
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
 
 #include "config.h"
 #include <errno.h>

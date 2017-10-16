@@ -21,6 +21,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @page conn_ssl_gnutls Handling of GnuTLS encryption
+ *
+ * Handling of GnuTLS encryption
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
+
 #include "config.h"
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>

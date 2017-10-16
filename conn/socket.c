@@ -22,6 +22,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @page conn_socket Low-level socket handling
+ *
+ * Low-level socket handling
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
+
 #include "config.h"
 #include <errno.h>
 #include <fcntl.h>

@@ -20,6 +20,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @page conn_getdomain DNS lookups
+ *
+ * DNS lookups
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
+
 #include "config.h"
 #include <netdb.h>
 #include <string.h>

@@ -1,6 +1,6 @@
 /**
  * @file
- * Connection Global Variables
+ * Connection Library
  *
  * @authors
  * Copyright (C) 2017 Richard Russon <rich@flatcap.org>
@@ -21,27 +21,30 @@
  */
 
 /**
- * @page conn_globals Connection Global Variables
+ * @page conn Connection Library
  *
- * Connection Global Variables
+ * Manage external connections.
+ *
+ * -# @subpage conn_globals
+ * -# @subpage conn_getdomain
+ * -# @subpage conn_sasl
+ * -# @subpage conn_sasl_plain
+ * -# @subpage conn_socket
+ * -# @subpage conn_ssl
+ * -# @subpage conn_ssl_gnutls
+ * -# @subpage conn_tunnel
  */
 
-#include "config.h"
+#ifndef _CONN_CONN_H
+#define _CONN_CONN_H
 
-#ifdef USE_SSL
-const char *CertificateFile;
-const char *SslClientCert;
-const char *EntropyFile;
-const char *SslCiphers;
-#ifdef USE_SSL_GNUTLS
-short SslMinDhPrimeBits;
-const char *SslCaCertificatesFile;
-#endif
-#endif
+#include "account.h"
+#include "connection.h"
+#include "conn_globals.h"
+#include "sasl.h"
+#include "sasl_plain.h"
+#include "socket.h"
+#include "ssl.h"
+#include "tunnel.h"
 
-short ConnectTimeout;
-
-#ifdef USE_SOCKET
-const char *Preconnect;
-const char *Tunnel;
-#endif /* USE_SOCKET */
+#endif /* _CONN_CONN_H */

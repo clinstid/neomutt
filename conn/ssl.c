@@ -20,6 +20,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @page conn_ssl Handling of OpenSSL encryption
+ *
+ * Handling of OpenSSL encryption
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
+
 #include "config.h"
 #include <errno.h>
 #include <limits.h>

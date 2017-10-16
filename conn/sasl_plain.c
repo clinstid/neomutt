@@ -20,6 +20,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @page conn_sasl_plain SASL plain authentication support
+ *
+ * SASL plain authentication support
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
+
 #include "config.h"
 #include <stdio.h>
 #include "lib/base64.h"

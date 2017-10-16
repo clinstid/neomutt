@@ -21,6 +21,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @page conn_tunnel Support for network tunnelling 
+ *
+ * Support for network tunnelling
+ *
+ * | Function       | Description
+ * | :------------- | :-----------------------------------
+ */
+
 #include "config.h"
 #include <errno.h>
 #include <fcntl.h>
