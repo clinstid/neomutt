@@ -83,6 +83,55 @@ static int socket_preconnect(void)
 }
 
 /**
+ * socket_connect - set up to connect to a socket fd
+ */
+static int socket_connect(int fd, struct sockaddr *sa)
+{
+  int sa_size;
+  int save_errno;
+  sigset_t set;
+
+  if (sa->sa_family == AF_INET)
+    sa_size = sizeof(struct sockaddr_in);
+#ifdef HAVE_GETADDRINFO
+  else if (sa->sa_family == AF_INET6)
+    sa_size = sizeof(struct sockaddr_in6);
+#endif
+  else
+  {
+    mutt_debug(1, "Unknown address family!\n");
+    return -1;
+  }
+
+  if (ConnectTimeout > 0)
+    alarm(ConnectTimeout);
+
+  mutt_allow_interrupt(1);
+
+  /* FreeBSD's connect() does not respect SA_RESTART, meaning
+   * a SIGWINCH will cause the connect to fail. */
+  sigemptyset(&set);
+  sigaddset(&set, SIGWINCH);
+  sigprocmask(SIG_BLOCK, &set, NULL);
+
+  save_errno = 0;
+
+  if (connect(fd, sa, sa_size) < 0)
+  {
+    save_errno = errno;
+    mutt_debug(2, "Connection failed. errno: %d...\n", errno);
+    SigInt = 0; /* reset in case we caught SIGINTR while in connect() */
+  }
+
+  if (ConnectTimeout > 0)
+    alarm(0);
+  mutt_allow_interrupt(0);
+  sigprocmask(SIG_UNBLOCK, &set, NULL);
+
+  return save_errno;
+}
+
+/**
  * mutt_socket_open - Simple wrapper
  */
 int mutt_socket_open(struct Connection *conn)
@@ -333,55 +382,6 @@ int raw_socket_poll(struct Connection *conn, time_t wait_secs)
       return 0;
     wait_millis -= post_t_millis;
   }
-}
-
-/**
- * socket_connect - set up to connect to a socket fd
- */
-static int socket_connect(int fd, struct sockaddr *sa)
-{
-  int sa_size;
-  int save_errno;
-  sigset_t set;
-
-  if (sa->sa_family == AF_INET)
-    sa_size = sizeof(struct sockaddr_in);
-#ifdef HAVE_GETADDRINFO
-  else if (sa->sa_family == AF_INET6)
-    sa_size = sizeof(struct sockaddr_in6);
-#endif
-  else
-  {
-    mutt_debug(1, "Unknown address family!\n");
-    return -1;
-  }
-
-  if (ConnectTimeout > 0)
-    alarm(ConnectTimeout);
-
-  mutt_allow_interrupt(1);
-
-  /* FreeBSD's connect() does not respect SA_RESTART, meaning
-   * a SIGWINCH will cause the connect to fail. */
-  sigemptyset(&set);
-  sigaddset(&set, SIGWINCH);
-  sigprocmask(SIG_BLOCK, &set, NULL);
-
-  save_errno = 0;
-
-  if (connect(fd, sa, sa_size) < 0)
-  {
-    save_errno = errno;
-    mutt_debug(2, "Connection failed. errno: %d...\n", errno);
-    SigInt = 0; /* reset in case we caught SIGINTR while in connect() */
-  }
-
-  if (ConnectTimeout > 0)
-    alarm(0);
-  mutt_allow_interrupt(0);
-  sigprocmask(SIG_UNBLOCK, &set, NULL);
-
-  return save_errno;
 }
 
 int raw_socket_open(struct Connection *conn)
