@@ -42,15 +42,15 @@
  * @param authz ZZZ
  * @param user ZZZ
  * @param pass ZZZ
- * @retval size_t  YYY
+ * @retval size_t YYY
+ *
+ * authz, user, and pass can each be up to 255 bytes, making up for a 765 bytes
+ * string. Add the two NULL bytes in between plus one at the end and we get
+ * 768.
  */
-/* sasl_plain.c */
 size_t mutt_sasl_plain_msg(char *buf, size_t buflen, const char *cmd,
                            const char *authz, const char *user, const char *pass)
 {
-  /* authz, user, and pass can each be up to 255 bytes, making up for a 765
-   * bytes string. Add the two NULL bytes in between plus one at the end and we
-   * get 768. */
   char tmp[768];
   size_t len;
   size_t tmplen;

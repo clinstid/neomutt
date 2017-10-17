@@ -59,7 +59,10 @@
 #include "ssl.h"
 #endif
 
-/* socket.c */
+/**
+ * socket_preconnect - XXX
+ * @retval int YYY
+ */
 static int socket_preconnect(void)
 {
   int rc;
@@ -85,12 +88,9 @@ static int socket_preconnect(void)
 
 /**
  * socket_connect - set up to connect to a socket fd
- */
-/**
- * socket_connect - XXX
  * @param fd ZZZ
  * @param sa ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int socket_connect(int fd, struct sockaddr *sa)
 {
@@ -140,11 +140,8 @@ static int socket_connect(int fd, struct sockaddr *sa)
 
 /**
  * mutt_socket_open - Simple wrapper
- */
-/**
- * mutt_socket_open - XXX
  * @param conn ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_socket_open(struct Connection *conn)
 {
@@ -164,7 +161,7 @@ int mutt_socket_open(struct Connection *conn)
 /**
  * mutt_socket_close - XXX
  * @param conn ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_socket_close(struct Connection *conn)
 {
@@ -187,7 +184,7 @@ int mutt_socket_close(struct Connection *conn)
  * @param buf ZZZ
  * @param len ZZZ
  * @param dbg ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_socket_write_d(struct Connection *conn, const char *buf, int len, int dbg)
 {
@@ -227,15 +224,11 @@ int mutt_socket_write_d(struct Connection *conn, const char *buf, int len, int d
 
 /**
  * mutt_socket_poll - poll whether reads would block
+ * @param conn ZZZ
+ * @param wait_secs ZZZ
  * @retval >0 There is data to read
  * @retval  0 Read would block
  * @retval -1 Connection doesn't support polling
- */
-/**
- * mutt_socket_poll - XXX
- * @param conn ZZZ
- * @param wait_secs ZZZ
- * @retval int  YYY
  */
 int mutt_socket_poll(struct Connection *conn, time_t wait_secs)
 {
@@ -250,12 +243,9 @@ int mutt_socket_poll(struct Connection *conn, time_t wait_secs)
 
 /**
  * mutt_socket_readchar - simple read buffering to speed things up
- */
-/**
- * mutt_socket_readchar - XXX
  * @param conn ZZZ
  * @param c ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_socket_readchar(struct Connection *conn, char *c)
 {
@@ -292,7 +282,7 @@ int mutt_socket_readchar(struct Connection *conn, char *c)
  * @param buflen ZZZ
  * @param conn ZZZ
  * @param dbg ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_socket_readln_d(char *buf, size_t buflen, struct Connection *conn, int dbg)
 {
@@ -325,16 +315,8 @@ int mutt_socket_readln_d(char *buf, size_t buflen, struct Connection *conn, int 
 
 /**
  * socket_new_conn - allocate and initialise a new connection
- */
-/**
- * socket_new_conn - XXX
  * @param void ZZZ
  * @retval struct Connection * YYY
- */
-/**
- * socket_new_conn - XXX
- * @param void ZZZ
- * @retval struct Connection * - YYY
  */
 struct Connection *socket_new_conn(void)
 {
@@ -349,7 +331,7 @@ struct Connection *socket_new_conn(void)
 /**
  * raw_socket_close - XXX
  * @param conn ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int raw_socket_close(struct Connection *conn)
 {
@@ -361,7 +343,7 @@ int raw_socket_close(struct Connection *conn)
  * @param conn ZZZ
  * @param buf ZZZ
  * @param len ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int raw_socket_read(struct Connection *conn, char *buf, size_t len)
 {
@@ -393,7 +375,7 @@ int raw_socket_read(struct Connection *conn, char *buf, size_t len)
  * @param conn ZZZ
  * @param buf ZZZ
  * @param count ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int raw_socket_write(struct Connection *conn, const char *buf, size_t count)
 {
@@ -424,7 +406,7 @@ int raw_socket_write(struct Connection *conn, const char *buf, size_t count)
  * raw_socket_poll - XXX
  * @param conn ZZZ
  * @param wait_secs ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int raw_socket_poll(struct Connection *conn, time_t wait_secs)
 {
@@ -467,7 +449,7 @@ int raw_socket_poll(struct Connection *conn, time_t wait_secs)
 /**
  * raw_socket_open - XXX
  * @param conn ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int raw_socket_open(struct Connection *conn)
 {

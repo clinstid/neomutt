@@ -105,6 +105,8 @@ struct SslSockData
 
 /**
  * ssl_load_certificates - Load certificates and filter out the expired ones
+ * @param ctx ZZZ
+ * @retval int YYY
  *
  * ssl certificate verification can behave strangely if there are expired certs
  * loaded into the trusted store.  This function filters out expired certs.
@@ -112,7 +114,6 @@ struct SslSockData
  * Previously the code used this form:
  *     SSL_CTX_load_verify_locations (ssldata->ctx, CertificateFile, NULL);
  */
-/* ssl.c */
 static int ssl_load_certificates(SSL_CTX *ctx)
 {
   FILE *fp = NULL;
@@ -162,7 +163,7 @@ static int ssl_load_certificates(SSL_CTX *ctx)
 /**
  * ssl_set_verify_partial - XXX
  * @param ctx ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_set_verify_partial(SSL_CTX *ctx)
 {
@@ -197,7 +198,7 @@ static int ssl_set_verify_partial(SSL_CTX *ctx)
 /**
  * add_entropy - XXX
  * @param file ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int add_entropy(const char *file)
 {
@@ -238,7 +239,7 @@ static int add_entropy(const char *file)
  * ssl_err - XXX
  * @param data ZZZ
  * @param err ZZZ
- * @retval void  - YYY
+ * @retval void YYY
  */
 static void ssl_err(struct SslSockData *data, int err)
 {
@@ -310,7 +311,7 @@ static void ssl_err(struct SslSockData *data, int err)
 /**
  * ssl_dprint_err_stack - XXX
  * @param void ZZZ
- * @retval void  - YYY
+ * @retval void YYY
  */
 static void ssl_dprint_err_stack(void)
 {
@@ -342,7 +343,7 @@ static void ssl_dprint_err_stack(void)
  * @param size ZZZ
  * @param rwflag ZZZ
  * @param userdata ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_passwd_cb(char *buf, int size, int rwflag, void *userdata)
 {
@@ -363,7 +364,7 @@ static int ssl_passwd_cb(char *buf, int size, int rwflag, void *userdata)
 /**
  * ssl_socket_open_err - XXX
  * @param conn ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_socket_open_err(struct Connection *conn)
 {
@@ -375,7 +376,7 @@ static int ssl_socket_open_err(struct Connection *conn)
 /**
  * ssl_socket_close - XXX
  * @param conn ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_socket_close(struct Connection *conn)
 {
@@ -399,7 +400,7 @@ static int ssl_socket_close(struct Connection *conn)
  * x509_get_part - XXX
  * @param name ZZZ
  * @param nid ZZZ
- * @retval char * - YYY
+ * @retval char * YYY
  */
 static char *x509_get_part(X509_NAME *name, int nid)
 {
@@ -413,13 +414,12 @@ static char *x509_get_part(X509_NAME *name, int nid)
 
 /**
  * x509_fingerprint - XXX
- * @param s ZZZ
- * @param l ZZZ
- * @param cert ZZZ
- * @param  ZZZ
- * @param hashfunc) ZZZ
- * @param void ZZZ)
- * @retval void  - YYY
+ * @param s        ZZZ
+ * @param l        ZZZ
+ * @param cert     ZZZ
+ * @param          ZZZ
+ * @param hashfunc ZZZ
+ * @retval void YYY
  */
 static void x509_fingerprint(char *s, int l, X509 *cert, const EVP_MD *(*hashfunc)(void) )
 {
@@ -444,7 +444,7 @@ static void x509_fingerprint(char *s, int l, X509 *cert, const EVP_MD *(*hashfun
 /**
  * asn1time_to_string - XXX
  * @param tm ZZZ
- * @retval char * - YYY
+ * @retval char * YYY
  */
 static char *asn1time_to_string(ASN1_UTCTIME *tm)
 {
@@ -470,7 +470,7 @@ static char *asn1time_to_string(ASN1_UTCTIME *tm)
  * @param peercert ZZZ
  * @param peermd ZZZ
  * @param peermdlen ZZZ
- * @retval _Bool  - YYY
+ * @retval bool YYY
  */
 static bool compare_certificates(X509 *cert, X509 *peercert,
                                  unsigned char *peermd, unsigned int peermdlen)
@@ -497,7 +497,7 @@ static bool compare_certificates(X509 *cert, X509 *peercert,
  * check_certificate_expiration - XXX
  * @param peercert ZZZ
  * @param silent ZZZ
- * @retval _Bool  - YYY
+ * @retval bool YYY
  */
 static bool check_certificate_expiration(X509 *peercert, bool silent)
 {
@@ -530,12 +530,9 @@ static bool check_certificate_expiration(X509 *peercert, bool silent)
 
 /**
  * hostname_match - Does the hostname match the certificate
- */
-/**
- * hostname_match - XXX
  * @param hostname ZZZ
  * @param certname ZZZ
- * @retval _Bool  - YYY
+ * @retval bool YYY
  */
 static bool hostname_match(const char *hostname, const char *certname)
 {
@@ -575,6 +572,8 @@ static bool hostname_match(const char *hostname, const char *certname)
 
 /**
  * ssl_init - Initialist the SSL library
+ * @param void ZZZ
+ * @retval int YYY
  *
  * OpenSSL library needs to be fed with sufficient entropy. On systems with
  * /dev/urandom, this is done transparently by the library itself, on other
@@ -584,11 +583,6 @@ static bool hostname_match(const char *hostname, const char *certname)
  * entropy, we try to our best and fill the pool with older versions also.
  * (That's the reason for the ugly ifdefs and macros, otherwise I could have
  * simply ifdef'd the whole ssl_init funcion)
- */
-/**
- * ssl_init - XXX
- * @param void ZZZ
- * @retval int  - YYY
  */
 static int ssl_init(void)
 {
@@ -636,7 +630,7 @@ static int ssl_init(void)
  * @param conn ZZZ
  * @param buf ZZZ
  * @param len ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_socket_read(struct Connection *conn, char *buf, size_t len)
 {
@@ -662,7 +656,7 @@ static int ssl_socket_read(struct Connection *conn, char *buf, size_t len)
  * @param conn ZZZ
  * @param buf ZZZ
  * @param len ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_socket_write(struct Connection *conn, const char *buf, size_t len)
 {
@@ -686,7 +680,7 @@ static int ssl_socket_write(struct Connection *conn, const char *buf, size_t len
  * ssl_get_client_cert - XXX
  * @param ssldata ZZZ
  * @param conn ZZZ
- * @retval void  - YYY
+ * @retval void YYY
  */
 static void ssl_get_client_cert(struct SslSockData *ssldata, struct Connection *conn)
 {
@@ -706,7 +700,7 @@ static void ssl_get_client_cert(struct SslSockData *ssldata, struct Connection *
 /**
  * tls_close - XXX
  * @param conn ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int tls_close(struct Connection *conn)
 {
@@ -723,7 +717,7 @@ static int tls_close(struct Connection *conn)
 /**
  * check_certificate_cache - XXX
  * @param peercert ZZZ
- * @retval _Bool  - YYY
+ * @retval bool YYY
  */
 static bool check_certificate_cache(X509 *peercert)
 {
@@ -751,7 +745,7 @@ static bool check_certificate_cache(X509 *peercert)
 /**
  * check_certificate_file - XXX
  * @param peercert ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int check_certificate_file(X509 *peercert)
 {
@@ -794,14 +788,11 @@ static int check_certificate_file(X509 *peercert)
 
 /**
  * check_host - Check the host on the certificate
- */
-/**
- * check_host - XXX
  * @param x509cert ZZZ
  * @param hostname ZZZ
  * @param err ZZZ
  * @param errlen ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int check_host(X509 *x509cert, const char *hostname, char *err, size_t errlen)
 {
@@ -909,7 +900,7 @@ out:
 /**
  * check_certificate_by_digest - XXX
  * @param peercert ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int check_certificate_by_digest(X509 *peercert)
 {
@@ -919,7 +910,7 @@ static int check_certificate_by_digest(X509 *peercert)
 /**
  * ssl_cache_trusted_cert - XXX
  * @param c ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_cache_trusted_cert(X509 *c)
 {
@@ -936,7 +927,7 @@ static int ssl_cache_trusted_cert(X509 *c)
  * @param len ZZZ
  * @param ssl ZZZ
  * @param allow_always ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int allow_always)
 {
@@ -1099,16 +1090,13 @@ static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int al
 
 /**
  * ssl_verify_callback - certificate verification callback
+ * @param preverify_ok ZZZ
+ * @param ctx ZZZ
+ * @retval int YYY
  *
  * called for each certificate in the chain sent by the peer, starting from the
  * root; returning 1 means that the given certificate is trusted, returning 0
  * immediately aborts the SSL connection
- */
-/**
- * ssl_verify_callback - XXX
- * @param preverify_ok ZZZ
- * @param ctx ZZZ
- * @retval int  - YYY
  */
 static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
 {
@@ -1234,15 +1222,12 @@ static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
 
 /**
  * ssl_negotiate - Attempt to negotiate SSL over the wire
+ * @param conn ZZZ
+ * @param ssldata ZZZ
+ * @retval int YYY
  *
  * After SSL state has been initialized, attempt to negotiate SSL over the
  * wire, including certificate checks.
- */
-/**
- * ssl_negotiate - XXX
- * @param conn ZZZ
- * @param ssldata ZZZ
- * @retval int  - YYY
  */
 static int ssl_negotiate(struct Connection *conn, struct SslSockData *ssldata)
 {
@@ -1316,7 +1301,7 @@ static int ssl_negotiate(struct Connection *conn, struct SslSockData *ssldata)
 /**
  * ssl_socket_open - XXX
  * @param conn ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int ssl_socket_open(struct Connection *conn)
 {
@@ -1414,13 +1399,10 @@ static int ssl_socket_open(struct Connection *conn)
 
 /**
  * mutt_ssl_starttls - Negotiate TLS over an already opened connection
+ * @param conn ZZZ
+ * @retval int YYY
  *
  * TODO: Merge this code better with ssl_socket_open.
- */
-/**
- * mutt_ssl_starttls - XXX
- * @param conn ZZZ
- * @retval int  YYY
  */
 int mutt_ssl_starttls(struct Connection *conn)
 {
@@ -1540,7 +1522,7 @@ bail:
 /**
  * mutt_ssl_socket_setup - XXX
  * @param conn ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_ssl_socket_setup(struct Connection *conn)
 {

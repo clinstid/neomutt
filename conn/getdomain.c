@@ -43,7 +43,7 @@
  * getdnsdomainname - XXX
  * @param d ZZZ
  * @param len ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int getdnsdomainname(char *d, size_t len)
 {

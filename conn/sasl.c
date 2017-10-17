@@ -62,10 +62,21 @@
 #include "options.h"
 #include "protos.h"
 
+/* arbitrary. SASL will probably use a smaller buffer anyway. OTOH it's
+ * been a while since I've had access to an SASL server which negotiated
+ * a protection buffer. */
+#define MUTT_SASL_MAXBUF 65536
+
+#define IP_PORT_BUFLEN 1024
+
+static sasl_callback_t MuttSaslCallbacks[5];
+
+static sasl_secret_t *secret_ptr = NULL;
+
 /**
  * getnameinfo_err - XXX
  * @param ret ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int getnameinfo_err(int ret)
 {
@@ -115,29 +126,15 @@ static int getnameinfo_err(int ret)
   return err;
 }
 
-/* arbitrary. SASL will probably use a smaller buffer anyway. OTOH it's
- * been a while since I've had access to an SASL server which negotiated
- * a protection buffer. */
-#define MUTT_SASL_MAXBUF 65536
-
-#define IP_PORT_BUFLEN 1024
-
-static sasl_callback_t MuttSaslCallbacks[5];
-
-static sasl_secret_t *secret_ptr = NULL;
-
 /**
  * iptostring - Convert IP Address to string
+ * @param addr    ZZZ
+ * @param addrlen ZZZ
+ * @param out     ZZZ
+ * @param outlen  ZZZ
+ * @retval int YYY
  *
  * utility function, copied from sasl2 sample code
- */
-/**
- * iptostring - XXX
- * @param addr ZZZ
- * @param addrlen ZZZ
- * @param out ZZZ
- * @param outlen ZZZ
- * @retval int  - YYY
  */
 static int iptostring(const struct sockaddr *addr, socklen_t addrlen, char *out, unsigned outlen)
 {
@@ -166,13 +163,10 @@ static int iptostring(const struct sockaddr *addr, socklen_t addrlen, char *out,
 
 /**
  * mutt_sasl_cb_log - callback to log SASL messages
- */
-/**
- * mutt_sasl_cb_log - XXX
  * @param context ZZZ
  * @param priority ZZZ
  * @param message ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int mutt_sasl_cb_log(void *context, int priority, const char *message)
 {
@@ -183,13 +177,9 @@ static int mutt_sasl_cb_log(void *context, int priority, const char *message)
 
 /**
  * mutt_sasl_start - Initialise SASL library
+ * @retval int YYY
  *
  * Call before doing an SASL exchange - initialises library (if necessary).
- */
-/**
- * mutt_sasl_start - XXX
- * @param void - ZZZ
- * @retval int  - YYY
  */
 static int mutt_sasl_start(void)
 {
@@ -225,14 +215,11 @@ static int mutt_sasl_start(void)
 
 /**
  * mutt_sasl_cb_authname - callback to retrieve authname or user from Account
- */
-/**
- * mutt_sasl_cb_authname - XXX
  * @param context ZZZ
  * @param id ZZZ
  * @param result ZZZ
  * @param len ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int mutt_sasl_cb_authname(void *context, int id, const char **result, unsigned *len)
 {
@@ -277,7 +264,7 @@ static int mutt_sasl_cb_authname(void *context, int id, const char **result, uns
  * @param context ZZZ
  * @param id ZZZ
  * @param psecret ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int mutt_sasl_cb_pass(sasl_conn_t *conn, void *context, int id, sasl_secret_t **psecret)
 {
@@ -306,7 +293,7 @@ static int mutt_sasl_cb_pass(sasl_conn_t *conn, void *context, int id, sasl_secr
 /**
  * mutt_sasl_get_callbacks - XXX
  * @param account ZZZ
- * @retval sasl_callback_t * - YYY
+ * @retval sasl_callback_t * YYY
  */
 static sasl_callback_t *mutt_sasl_get_callbacks(struct Account *account)
 {
@@ -343,15 +330,12 @@ static sasl_callback_t *mutt_sasl_get_callbacks(struct Account *account)
 
 /**
  * mutt_sasl_conn_open - empty wrapper for underlying open function
+ * @param conn ZZZ
+ * @retval int YYY
  *
  * We don't know in advance that a connection will use SASL, so we replace
  * conn's methods with sasl methods when authentication is successful, using
  * mutt_sasl_setup_conn
- */
-/**
- * mutt_sasl_conn_open - XXX
- * @param conn ZZZ
- * @retval int  - YYY
  */
 static int mutt_sasl_conn_open(struct Connection *conn)
 {
@@ -368,14 +352,11 @@ static int mutt_sasl_conn_open(struct Connection *conn)
 
 /**
  * mutt_sasl_conn_close - close SASL connection
+ * @param conn ZZZ
+ * @retval int YYY
  *
  * Calls underlying close function and disposes of the sasl_conn_t object, then
  * restores connection to pre-sasl state
- */
-/**
- * mutt_sasl_conn_close - XXX
- * @param conn ZZZ
- * @retval int  - YYY
  */
 static int mutt_sasl_conn_close(struct Connection *conn)
 {
@@ -407,7 +388,7 @@ static int mutt_sasl_conn_close(struct Connection *conn)
  * @param conn ZZZ
  * @param buf ZZZ
  * @param len ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int mutt_sasl_conn_read(struct Connection *conn, char *buf, size_t len)
 {
@@ -475,7 +456,7 @@ out:
  * @param conn ZZZ
  * @param buf ZZZ
  * @param len ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int mutt_sasl_conn_write(struct Connection *conn, const char *buf, size_t len)
 {
@@ -528,7 +509,7 @@ fail:
  * mutt_sasl_conn_poll - XXX
  * @param conn ZZZ
  * @param wait_secs ZZZ
- * @retval int  - YYY
+ * @retval int YYY
  */
 static int mutt_sasl_conn_poll(struct Connection *conn, time_t wait_secs)
 {
@@ -544,15 +525,12 @@ static int mutt_sasl_conn_poll(struct Connection *conn, time_t wait_secs)
 
 /**
  * mutt_sasl_client_new - wrapper for sasl_client_new
+ * @param conn ZZZ
+ * @param saslconn ZZZ
+ * @retval int YYY
  *
  * which also sets various security properties. If this turns out to be fine
  * for POP too we can probably stop exporting mutt_sasl_get_callbacks().
- */
-/**
- * mutt_sasl_client_new - XXX
- * @param conn ZZZ
- * @param saslconn ZZZ
- * @retval int  YYY
  */
 int mutt_sasl_client_new(struct Connection *conn, sasl_conn_t **saslconn)
 {
@@ -659,7 +637,7 @@ int mutt_sasl_client_new(struct Connection *conn, sasl_conn_t **saslconn)
 /**
  * mutt_sasl_interact - XXX
  * @param interaction ZZZ
- * @retval int  YYY
+ * @retval int YYY
  */
 int mutt_sasl_interact(sasl_interact_t *interaction)
 {
@@ -688,15 +666,12 @@ int mutt_sasl_interact(sasl_interact_t *interaction)
 
 /**
  * mutt_sasl_setup_conn - Set up an SASL connection
+ * @param conn ZZZ
+ * @param saslconn ZZZ
+ * @retval void YYY
  *
  * replace connection methods, sockdata with SASL wrappers, for protection
  * layers. Also get ssf, as a fastpath for the read/write methods.
- */
-/**
- * mutt_sasl_setup_conn - XXX
- * @param conn ZZZ
- * @param saslconn ZZZ
- * @retval void  YYY
  */
 void mutt_sasl_setup_conn(struct Connection *conn, sasl_conn_t *saslconn)
 {
@@ -739,13 +714,11 @@ void mutt_sasl_setup_conn(struct Connection *conn, sasl_conn_t *saslconn)
 
 /*
  * mutt_sasl_done - Invoke when processing is complete.
+ * @param void ZZZ
+ * @retval void YYY
+ *
  * This is a cleanup function, used to free all memory used by the library. 
  * Invoke when processing is complete.
- */
-/**
- * mutt_sasl_done - XXX
- * @param void ZZZ
- * @retval void  YYY
  */
 void mutt_sasl_done(void)
 {

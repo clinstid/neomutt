@@ -23,25 +23,37 @@
 /**
  * @page conn_globals Connection Global Variables
  *
- * Connection Global Variables
+ * These global variables are private to the connection library.
+ *
+ * | Global Variable       | NeoMutt Config
+ * | :-------------------- | :------------------------
+ * | CertificateFile       | $certificate_file
+ * | ConnectTimeout        | $connect_timeout
+ * | EntropyFile           | $entropy_file
+ * | Preconnect            | $preconnect
+ * | SslCaCertificatesFile | $ssl_ca_certificates_file
+ * | SslCiphers            | $ssl_ciphers
+ * | SslClientCert         | $ssl_client_cert
+ * | SslMinDhPrimeBits     | $ssl_min_dh_prime_bits
+ * | Tunnel                | $tunnel
  */
 
 #include "config.h"
 
-#ifdef USE_SSL
-const char *CertificateFile;
-const char *SslClientCert;
-const char *EntropyFile;
-const char *SslCiphers;
-#ifdef USE_SSL_GNUTLS
-short SslMinDhPrimeBits;
-const char *SslCaCertificatesFile;
-#endif
-#endif
+short ConnectTimeout; /**< Config: $connect_timeout */
 
-short ConnectTimeout;
+#ifdef USE_SSL
+const char *CertificateFile; /**< Config: $certificate_file */
+const char *EntropyFile;     /**< Config: $entropy_file */
+const char *SslCiphers;      /**< Config: $ssl_ciphers */
+const char *SslClientCert;   /**< Config: $ssl_client_cert */
+#ifdef USE_SSL_GNUTLS
+const char *SslCaCertificatesFile; /**< Config: $ssl_ca_certificates_file */
+short SslMinDhPrimeBits;           /**< Config: $ssl_min_dh_prime_bits */
+#endif
+#endif
 
 #ifdef USE_SOCKET
-const char *Preconnect;
-const char *Tunnel;
-#endif /* USE_SOCKET */
+const char *Preconnect; /**< Config: $preconnect */
+const char *Tunnel;     /**< Config: $tunnel */
+#endif                  /* USE_SOCKET */
