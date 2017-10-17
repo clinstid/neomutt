@@ -80,6 +80,7 @@ struct TlsSockData
   gnutls_certificate_credentials_t xcred;
 };
 
+/* ssl_gnutls.c */
 static int tls_init(void)
 {
   static bool init_complete = false;
@@ -100,6 +101,13 @@ static int tls_init(void)
   return 0;
 }
 
+/**
+ * tls_socket_read - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int tls_socket_read(struct Connection *conn, char *buf, size_t len)
 {
   struct TlsSockData *data = conn->sockdata;
@@ -126,6 +134,13 @@ static int tls_socket_read(struct Connection *conn, char *buf, size_t len)
   return ret;
 }
 
+/**
+ * tls_socket_write - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int tls_socket_write(struct Connection *conn, const char *buf, size_t len)
 {
   struct TlsSockData *data = conn->sockdata;
@@ -158,6 +173,11 @@ static int tls_socket_write(struct Connection *conn, const char *buf, size_t len
   return sent;
 }
 
+/**
+ * tls_socket_close - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int tls_socket_close(struct Connection *conn)
 {
   struct TlsSockData *data = conn->sockdata;
@@ -181,6 +201,11 @@ static int tls_socket_close(struct Connection *conn)
   return raw_socket_close(conn);
 }
 
+/**
+ * tls_starttls_close - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int tls_starttls_close(struct Connection *conn)
 {
   int rc;
@@ -197,6 +222,11 @@ static int tls_starttls_close(struct Connection *conn)
  * tls_verify_peers - wrapper for gnutls_certificate_verify_peers
  *
  * wrapper with sanity-checking
+ */
+/**
+ * tls_verify_peers - XXX
+ * @param tlsstate ZZZ
+ * @retval gnutls_certificate_status_t  - YYY
  */
 static gnutls_certificate_status_t tls_verify_peers(gnutls_session_t tlsstate)
 {
@@ -231,6 +261,14 @@ static gnutls_certificate_status_t tls_verify_peers(gnutls_session_t tlsstate)
   return status;
 }
 
+/**
+ * tls_fingerprint - XXX
+ * @param algo ZZZ
+ * @param s ZZZ
+ * @param l ZZZ
+ * @param data ZZZ
+ * @retval void  - YYY
+ */
 static void tls_fingerprint(gnutls_digest_algorithm_t algo, char *s, int l,
                             const gnutls_datum_t *data)
 {
@@ -255,6 +293,12 @@ static void tls_fingerprint(gnutls_digest_algorithm_t algo, char *s, int l,
   }
 }
 
+/**
+ * tls_check_stored_hostname - XXX
+ * @param cert ZZZ
+ * @param hostname ZZZ
+ * @retval int  - YYY
+ */
 static int tls_check_stored_hostname(const gnutls_datum_t *cert, const char *hostname)
 {
   char buf[80];
@@ -308,6 +352,11 @@ static int tls_check_stored_hostname(const gnutls_datum_t *cert, const char *hos
 
 /**
  * tls_compare_certificates - Compare certificates
+ */
+/**
+ * tls_compare_certificates - XXX
+ * @param peercert ZZZ
+ * @retval int  - YYY
  */
 static int tls_compare_certificates(const gnutls_datum_t *peercert)
 {
@@ -378,6 +427,16 @@ static int tls_compare_certificates(const gnutls_datum_t *peercert)
   return 0;
 }
 
+/**
+ * tls_check_preauth - XXX
+ * @param certdata ZZZ
+ * @param certstat ZZZ
+ * @param hostname ZZZ
+ * @param chainidx ZZZ
+ * @param certerr ZZZ
+ * @param savedcert ZZZ
+ * @retval int  - YYY
+ */
 static int tls_check_preauth(const gnutls_datum_t *certdata,
                              gnutls_certificate_status_t certstat, const char *hostname,
                              int chainidx, int *certerr, int *savedcert)
@@ -495,6 +554,13 @@ static int tls_check_preauth(const gnutls_datum_t *certdata,
   return -1;
 }
 
+/**
+ * tls_make_date - XXX
+ * @param t ZZZ
+ * @param s ZZZ
+ * @param len ZZZ
+ * @retval char * - YYY
+ */
 static char *tls_make_date(time_t t, char *s, size_t len)
 {
   struct tm *l = gmtime(&t);
@@ -517,6 +583,15 @@ static char *tls_make_date(time_t t, char *s, size_t len)
  * @param len      Length of certificate list
  * @retval 0  on failure
  * @retval >0 on success
+ */
+/**
+ * tls_check_one_certificate - XXX
+ * @param certdata ZZZ
+ * @param certstat ZZZ
+ * @param hostname ZZZ
+ * @param idx ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
  */
 static int tls_check_one_certificate(const gnutls_datum_t *certdata,
                                      gnutls_certificate_status_t certstat,
@@ -802,6 +877,11 @@ static int tls_check_one_certificate(const gnutls_datum_t *certdata,
   return (done == 2);
 }
 
+/**
+ * tls_check_certificate - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int tls_check_certificate(struct Connection *conn)
 {
   struct TlsSockData *data = conn->sockdata;
@@ -880,6 +960,11 @@ static int tls_check_certificate(struct Connection *conn)
   return rc;
 }
 
+/**
+ * tls_get_client_cert - XXX
+ * @param conn ZZZ
+ * @retval void  - YYY
+ */
 static void tls_get_client_cert(struct Connection *conn)
 {
   struct TlsSockData *data = conn->sockdata;
@@ -939,6 +1024,11 @@ err_crt:
 }
 
 #ifdef HAVE_GNUTLS_PRIORITY_SET_DIRECT
+/**
+ * tls_set_priority - XXX
+ * @param data ZZZ
+ * @retval int  - YYY
+ */
 static int tls_set_priority(struct TlsSockData *data)
 {
   size_t nproto = 4;
@@ -1042,6 +1132,11 @@ static int tls_set_priority(struct TlsSockData *data)
  *
  * After TLS state has been initialized, attempt to negotiate TLS over the
  * wire, including certificate checks.
+ */
+/**
+ * tls_negotiate - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
  */
 static int tls_negotiate(struct Connection *conn)
 {
@@ -1163,6 +1258,11 @@ fail:
   return -1;
 }
 
+/**
+ * tls_socket_open - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int tls_socket_open(struct Connection *conn)
 {
   if (raw_socket_open(conn) < 0)
@@ -1177,6 +1277,11 @@ static int tls_socket_open(struct Connection *conn)
   return 0;
 }
 
+/**
+ * mutt_ssl_socket_setup - XXX
+ * @param conn ZZZ
+ * @retval int  YYY
+ */
 int mutt_ssl_socket_setup(struct Connection *conn)
 {
   if (tls_init() < 0)
@@ -1191,6 +1296,11 @@ int mutt_ssl_socket_setup(struct Connection *conn)
   return 0;
 }
 
+/**
+ * mutt_ssl_starttls - XXX
+ * @param conn ZZZ
+ * @retval int  YYY
+ */
 int mutt_ssl_starttls(struct Connection *conn)
 {
   if (tls_init() < 0)

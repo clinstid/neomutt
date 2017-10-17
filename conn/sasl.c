@@ -62,6 +62,11 @@
 #include "options.h"
 #include "protos.h"
 
+/**
+ * getnameinfo_err - XXX
+ * @param ret ZZZ
+ * @retval int  - YYY
+ */
 static int getnameinfo_err(int ret)
 {
   int err;
@@ -126,6 +131,14 @@ static sasl_secret_t *secret_ptr = NULL;
  *
  * utility function, copied from sasl2 sample code
  */
+/**
+ * iptostring - XXX
+ * @param addr ZZZ
+ * @param addrlen ZZZ
+ * @param out ZZZ
+ * @param outlen ZZZ
+ * @retval int  - YYY
+ */
 static int iptostring(const struct sockaddr *addr, socklen_t addrlen, char *out, unsigned outlen)
 {
   char hbuf[NI_MAXHOST], pbuf[NI_MAXSERV];
@@ -154,6 +167,13 @@ static int iptostring(const struct sockaddr *addr, socklen_t addrlen, char *out,
 /**
  * mutt_sasl_cb_log - callback to log SASL messages
  */
+/**
+ * mutt_sasl_cb_log - XXX
+ * @param context ZZZ
+ * @param priority ZZZ
+ * @param message ZZZ
+ * @retval int  - YYY
+ */
 static int mutt_sasl_cb_log(void *context, int priority, const char *message)
 {
   mutt_debug(priority, "SASL: %s\n", message);
@@ -165,6 +185,11 @@ static int mutt_sasl_cb_log(void *context, int priority, const char *message)
  * mutt_sasl_start - Initialise SASL library
  *
  * Call before doing an SASL exchange - initialises library (if necessary).
+ */
+/**
+ * mutt_sasl_start - XXX
+ * @param void - ZZZ
+ * @retval int  - YYY
  */
 static int mutt_sasl_start(void)
 {
@@ -200,6 +225,14 @@ static int mutt_sasl_start(void)
 
 /**
  * mutt_sasl_cb_authname - callback to retrieve authname or user from Account
+ */
+/**
+ * mutt_sasl_cb_authname - XXX
+ * @param context ZZZ
+ * @param id ZZZ
+ * @param result ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
  */
 static int mutt_sasl_cb_authname(void *context, int id, const char **result, unsigned *len)
 {
@@ -238,6 +271,14 @@ static int mutt_sasl_cb_authname(void *context, int id, const char **result, uns
   return SASL_OK;
 }
 
+/**
+ * mutt_sasl_cb_pass - XXX
+ * @param conn ZZZ
+ * @param context ZZZ
+ * @param id ZZZ
+ * @param psecret ZZZ
+ * @retval int  - YYY
+ */
 static int mutt_sasl_cb_pass(sasl_conn_t *conn, void *context, int id, sasl_secret_t **psecret)
 {
   struct Account *account = (struct Account *) context;
@@ -262,6 +303,11 @@ static int mutt_sasl_cb_pass(sasl_conn_t *conn, void *context, int id, sasl_secr
   return SASL_OK;
 }
 
+/**
+ * mutt_sasl_get_callbacks - XXX
+ * @param account ZZZ
+ * @retval sasl_callback_t * - YYY
+ */
 static sasl_callback_t *mutt_sasl_get_callbacks(struct Account *account)
 {
   sasl_callback_t *callback = NULL;
@@ -302,6 +348,11 @@ static sasl_callback_t *mutt_sasl_get_callbacks(struct Account *account)
  * conn's methods with sasl methods when authentication is successful, using
  * mutt_sasl_setup_conn
  */
+/**
+ * mutt_sasl_conn_open - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int mutt_sasl_conn_open(struct Connection *conn)
 {
   struct SaslData *sasldata = NULL;
@@ -320,6 +371,11 @@ static int mutt_sasl_conn_open(struct Connection *conn)
  *
  * Calls underlying close function and disposes of the sasl_conn_t object, then
  * restores connection to pre-sasl state
+ */
+/**
+ * mutt_sasl_conn_close - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
  */
 static int mutt_sasl_conn_close(struct Connection *conn)
 {
@@ -346,6 +402,13 @@ static int mutt_sasl_conn_close(struct Connection *conn)
   return rc;
 }
 
+/**
+ * mutt_sasl_conn_read - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int mutt_sasl_conn_read(struct Connection *conn, char *buf, size_t len)
 {
   struct SaslData *sasldata = NULL;
@@ -407,6 +470,13 @@ out:
   return rc;
 }
 
+/**
+ * mutt_sasl_conn_write - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int mutt_sasl_conn_write(struct Connection *conn, const char *buf, size_t len)
 {
   struct SaslData *sasldata = NULL;
@@ -454,6 +524,12 @@ fail:
   return -1;
 }
 
+/**
+ * mutt_sasl_conn_poll - XXX
+ * @param conn ZZZ
+ * @param wait_secs ZZZ
+ * @retval int  - YYY
+ */
 static int mutt_sasl_conn_poll(struct Connection *conn, time_t wait_secs)
 {
   struct SaslData *sasldata = conn->sockdata;
@@ -471,6 +547,12 @@ static int mutt_sasl_conn_poll(struct Connection *conn, time_t wait_secs)
  *
  * which also sets various security properties. If this turns out to be fine
  * for POP too we can probably stop exporting mutt_sasl_get_callbacks().
+ */
+/**
+ * mutt_sasl_client_new - XXX
+ * @param conn ZZZ
+ * @param saslconn ZZZ
+ * @retval int  YYY
  */
 int mutt_sasl_client_new(struct Connection *conn, sasl_conn_t **saslconn)
 {
@@ -574,6 +656,11 @@ int mutt_sasl_client_new(struct Connection *conn, sasl_conn_t **saslconn)
   return 0;
 }
 
+/**
+ * mutt_sasl_interact - XXX
+ * @param interaction ZZZ
+ * @retval int  YYY
+ */
 int mutt_sasl_interact(sasl_interact_t *interaction)
 {
   char prompt[SHORT_STRING];
@@ -604,6 +691,12 @@ int mutt_sasl_interact(sasl_interact_t *interaction)
  *
  * replace connection methods, sockdata with SASL wrappers, for protection
  * layers. Also get ssf, as a fastpath for the read/write methods.
+ */
+/**
+ * mutt_sasl_setup_conn - XXX
+ * @param conn ZZZ
+ * @param saslconn ZZZ
+ * @retval void  YYY
  */
 void mutt_sasl_setup_conn(struct Connection *conn, sasl_conn_t *saslconn)
 {
@@ -648,6 +741,11 @@ void mutt_sasl_setup_conn(struct Connection *conn, sasl_conn_t *saslconn)
  * mutt_sasl_done - Invoke when processing is complete.
  * This is a cleanup function, used to free all memory used by the library. 
  * Invoke when processing is complete.
+ */
+/**
+ * mutt_sasl_done - XXX
+ * @param void ZZZ
+ * @retval void  YYY
  */
 void mutt_sasl_done(void)
 {

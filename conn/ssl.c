@@ -112,6 +112,7 @@ struct SslSockData
  * Previously the code used this form:
  *     SSL_CTX_load_verify_locations (ssldata->ctx, CertificateFile, NULL);
  */
+/* ssl.c */
 static int ssl_load_certificates(SSL_CTX *ctx)
 {
   FILE *fp = NULL;
@@ -158,6 +159,11 @@ static int ssl_load_certificates(SSL_CTX *ctx)
   return rv;
 }
 
+/**
+ * ssl_set_verify_partial - XXX
+ * @param ctx ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_set_verify_partial(SSL_CTX *ctx)
 {
   int rv = 0;
@@ -188,6 +194,11 @@ static int ssl_set_verify_partial(SSL_CTX *ctx)
   return rv;
 }
 
+/**
+ * add_entropy - XXX
+ * @param file ZZZ
+ * @retval int  - YYY
+ */
 static int add_entropy(const char *file)
 {
   struct stat st;
@@ -223,6 +234,12 @@ static int add_entropy(const char *file)
   return n;
 }
 
+/**
+ * ssl_err - XXX
+ * @param data ZZZ
+ * @param err ZZZ
+ * @retval void  - YYY
+ */
 static void ssl_err(struct SslSockData *data, int err)
 {
   int e = SSL_get_error(data->ssl, err);
@@ -290,6 +307,11 @@ static void ssl_err(struct SslSockData *data, int err)
 #endif
 }
 
+/**
+ * ssl_dprint_err_stack - XXX
+ * @param void ZZZ
+ * @retval void  - YYY
+ */
 static void ssl_dprint_err_stack(void)
 {
 #ifdef DEBUG
@@ -314,6 +336,14 @@ static void ssl_dprint_err_stack(void)
 #endif
 }
 
+/**
+ * ssl_passwd_cb - XXX
+ * @param buf ZZZ
+ * @param size ZZZ
+ * @param rwflag ZZZ
+ * @param userdata ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_passwd_cb(char *buf, int size, int rwflag, void *userdata)
 {
   struct Account *account = (struct Account *) userdata;
@@ -330,6 +360,11 @@ static int ssl_passwd_cb(char *buf, int size, int rwflag, void *userdata)
   return snprintf(buf, size, "%s", account->pass);
 }
 
+/**
+ * ssl_socket_open_err - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_socket_open_err(struct Connection *conn)
 {
   mutt_error(_("SSL disabled due to the lack of entropy"));
@@ -337,6 +372,11 @@ static int ssl_socket_open_err(struct Connection *conn)
   return -1;
 }
 
+/**
+ * ssl_socket_close - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_socket_close(struct Connection *conn)
 {
   struct SslSockData *data = conn->sockdata;
@@ -355,6 +395,12 @@ static int ssl_socket_close(struct Connection *conn)
   return raw_socket_close(conn);
 }
 
+/**
+ * x509_get_part - XXX
+ * @param name ZZZ
+ * @param nid ZZZ
+ * @retval char * - YYY
+ */
 static char *x509_get_part(X509_NAME *name, int nid)
 {
   static char ret[SHORT_STRING];
@@ -365,6 +411,16 @@ static char *x509_get_part(X509_NAME *name, int nid)
   return ret;
 }
 
+/**
+ * x509_fingerprint - XXX
+ * @param s ZZZ
+ * @param l ZZZ
+ * @param cert ZZZ
+ * @param  ZZZ
+ * @param hashfunc) ZZZ
+ * @param void ZZZ)
+ * @retval void  - YYY
+ */
 static void x509_fingerprint(char *s, int l, X509 *cert, const EVP_MD *(*hashfunc)(void) )
 {
   unsigned char md[EVP_MAX_MD_SIZE];
@@ -385,6 +441,11 @@ static void x509_fingerprint(char *s, int l, X509 *cert, const EVP_MD *(*hashfun
   }
 }
 
+/**
+ * asn1time_to_string - XXX
+ * @param tm ZZZ
+ * @retval char * - YYY
+ */
 static char *asn1time_to_string(ASN1_UTCTIME *tm)
 {
   static char buf[64];
@@ -403,6 +464,14 @@ static char *asn1time_to_string(ASN1_UTCTIME *tm)
   return buf;
 }
 
+/**
+ * compare_certificates - XXX
+ * @param cert ZZZ
+ * @param peercert ZZZ
+ * @param peermd ZZZ
+ * @param peermdlen ZZZ
+ * @retval _Bool  - YYY
+ */
 static bool compare_certificates(X509 *cert, X509 *peercert,
                                  unsigned char *peermd, unsigned int peermdlen)
 {
@@ -424,6 +493,12 @@ static bool compare_certificates(X509 *cert, X509 *peercert,
   return true;
 }
 
+/**
+ * check_certificate_expiration - XXX
+ * @param peercert ZZZ
+ * @param silent ZZZ
+ * @retval _Bool  - YYY
+ */
 static bool check_certificate_expiration(X509 *peercert, bool silent)
 {
   if (option(OPT_SSL_VERIFY_DATES) != MUTT_NO)
@@ -455,6 +530,12 @@ static bool check_certificate_expiration(X509 *peercert, bool silent)
 
 /**
  * hostname_match - Does the hostname match the certificate
+ */
+/**
+ * hostname_match - XXX
+ * @param hostname ZZZ
+ * @param certname ZZZ
+ * @retval _Bool  - YYY
  */
 static bool hostname_match(const char *hostname, const char *certname)
 {
@@ -504,6 +585,11 @@ static bool hostname_match(const char *hostname, const char *certname)
  * (That's the reason for the ugly ifdefs and macros, otherwise I could have
  * simply ifdef'd the whole ssl_init funcion)
  */
+/**
+ * ssl_init - XXX
+ * @param void ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_init(void)
 {
   char path[_POSIX_PATH_MAX];
@@ -545,6 +631,13 @@ static int ssl_init(void)
   return 0;
 }
 
+/**
+ * ssl_socket_read - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_socket_read(struct Connection *conn, char *buf, size_t len)
 {
   struct SslSockData *data = conn->sockdata;
@@ -564,6 +657,13 @@ static int ssl_socket_read(struct Connection *conn, char *buf, size_t len)
   return rc;
 }
 
+/**
+ * ssl_socket_write - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_socket_write(struct Connection *conn, const char *buf, size_t len)
 {
   struct SslSockData *data = conn->sockdata;
@@ -582,6 +682,12 @@ static int ssl_socket_write(struct Connection *conn, const char *buf, size_t len
   return rc;
 }
 
+/**
+ * ssl_get_client_cert - XXX
+ * @param ssldata ZZZ
+ * @param conn ZZZ
+ * @retval void  - YYY
+ */
 static void ssl_get_client_cert(struct SslSockData *ssldata, struct Connection *conn)
 {
   if (SslClientCert)
@@ -597,6 +703,11 @@ static void ssl_get_client_cert(struct SslSockData *ssldata, struct Connection *
   }
 }
 
+/**
+ * tls_close - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int tls_close(struct Connection *conn)
 {
   int rc;
@@ -609,6 +720,11 @@ static int tls_close(struct Connection *conn)
   return rc;
 }
 
+/**
+ * check_certificate_cache - XXX
+ * @param peercert ZZZ
+ * @retval _Bool  - YYY
+ */
 static bool check_certificate_cache(X509 *peercert)
 {
   unsigned char peermd[EVP_MAX_MD_SIZE];
@@ -632,6 +748,11 @@ static bool check_certificate_cache(X509 *peercert)
   return false;
 }
 
+/**
+ * check_certificate_file - XXX
+ * @param peercert ZZZ
+ * @retval int  - YYY
+ */
 static int check_certificate_file(X509 *peercert)
 {
   unsigned char peermd[EVP_MAX_MD_SIZE];
@@ -673,6 +794,14 @@ static int check_certificate_file(X509 *peercert)
 
 /**
  * check_host - Check the host on the certificate
+ */
+/**
+ * check_host - XXX
+ * @param x509cert ZZZ
+ * @param hostname ZZZ
+ * @param err ZZZ
+ * @param errlen ZZZ
+ * @retval int  - YYY
  */
 static int check_host(X509 *x509cert, const char *hostname, char *err, size_t errlen)
 {
@@ -777,11 +906,21 @@ out:
   return rc;
 }
 
+/**
+ * check_certificate_by_digest - XXX
+ * @param peercert ZZZ
+ * @retval int  - YYY
+ */
 static int check_certificate_by_digest(X509 *peercert)
 {
   return check_certificate_expiration(peercert, false) && check_certificate_file(peercert);
 }
 
+/**
+ * ssl_cache_trusted_cert - XXX
+ * @param c ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_cache_trusted_cert(X509 *c)
 {
   mutt_debug(1, "ssl_cache_trusted_cert: trusted\n");
@@ -790,6 +929,15 @@ static int ssl_cache_trusted_cert(X509 *c)
   return (sk_X509_push(SslSessionCerts, X509_dup(c)));
 }
 
+/**
+ * interactive_check_cert - XXX
+ * @param cert ZZZ
+ * @param idx ZZZ
+ * @param len ZZZ
+ * @param ssl ZZZ
+ * @param allow_always ZZZ
+ * @retval int  - YYY
+ */
 static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int allow_always)
 {
   static const int part[] = {
@@ -956,6 +1104,12 @@ static int interactive_check_cert(X509 *cert, int idx, int len, SSL *ssl, int al
  * root; returning 1 means that the given certificate is trusted, returning 0
  * immediately aborts the SSL connection
  */
+/**
+ * ssl_verify_callback - XXX
+ * @param preverify_ok ZZZ
+ * @param ctx ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
 {
   char buf[STRING];
@@ -1084,6 +1238,12 @@ static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
  * After SSL state has been initialized, attempt to negotiate SSL over the
  * wire, including certificate checks.
  */
+/**
+ * ssl_negotiate - XXX
+ * @param conn ZZZ
+ * @param ssldata ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_negotiate(struct Connection *conn, struct SslSockData *ssldata)
 {
   int err;
@@ -1153,6 +1313,11 @@ static int ssl_negotiate(struct Connection *conn, struct SslSockData *ssldata)
   return 0;
 }
 
+/**
+ * ssl_socket_open - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int ssl_socket_open(struct Connection *conn)
 {
   struct SslSockData *data = NULL;
@@ -1251,6 +1416,11 @@ static int ssl_socket_open(struct Connection *conn)
  * mutt_ssl_starttls - Negotiate TLS over an already opened connection
  *
  * TODO: Merge this code better with ssl_socket_open.
+ */
+/**
+ * mutt_ssl_starttls - XXX
+ * @param conn ZZZ
+ * @retval int  YYY
  */
 int mutt_ssl_starttls(struct Connection *conn)
 {
@@ -1367,6 +1537,11 @@ bail:
   return -1;
 }
 
+/**
+ * mutt_ssl_socket_setup - XXX
+ * @param conn ZZZ
+ * @retval int  YYY
+ */
 int mutt_ssl_socket_setup(struct Connection *conn)
 {
   if (ssl_init() < 0)

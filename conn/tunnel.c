@@ -61,6 +61,7 @@ struct TunnelData
   int writefd;
 };
 
+/* tunnel.c */
 static int tunnel_socket_open(struct Connection *conn)
 {
   struct TunnelData *tunnel = NULL;
@@ -139,6 +140,11 @@ static int tunnel_socket_open(struct Connection *conn)
   return 0;
 }
 
+/**
+ * tunnel_socket_close - XXX
+ * @param conn ZZZ
+ * @retval int  - YYY
+ */
 static int tunnel_socket_close(struct Connection *conn)
 {
   struct TunnelData *tunnel = (struct TunnelData *) conn->sockdata;
@@ -158,6 +164,13 @@ static int tunnel_socket_close(struct Connection *conn)
   return 0;
 }
 
+/**
+ * tunnel_socket_read - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int tunnel_socket_read(struct Connection *conn, char *buf, size_t len)
 {
   struct TunnelData *tunnel = (struct TunnelData *) conn->sockdata;
@@ -173,6 +186,13 @@ static int tunnel_socket_read(struct Connection *conn, char *buf, size_t len)
   return rc;
 }
 
+/**
+ * tunnel_socket_write - XXX
+ * @param conn ZZZ
+ * @param buf ZZZ
+ * @param len ZZZ
+ * @retval int  - YYY
+ */
 static int tunnel_socket_write(struct Connection *conn, const char *buf, size_t len)
 {
   struct TunnelData *tunnel = (struct TunnelData *) conn->sockdata;
@@ -188,6 +208,12 @@ static int tunnel_socket_write(struct Connection *conn, const char *buf, size_t 
   return rc;
 }
 
+/**
+ * tunnel_socket_poll - XXX
+ * @param conn ZZZ
+ * @param wait_secs ZZZ
+ * @retval int  - YYY
+ */
 static int tunnel_socket_poll(struct Connection *conn, time_t wait_secs)
 {
   struct TunnelData *tunnel = (struct TunnelData *) conn->sockdata;
@@ -207,6 +233,11 @@ static int tunnel_socket_poll(struct Connection *conn, time_t wait_secs)
  * @param conn Connection to asign functions to
  *
  * Assign tunnel socket functions to the Connection conn.
+ */
+/**
+ * mutt_tunnel_socket_setup - XXX
+ * @param conn ZZZ
+ * @retval void  YYY
  */
 void mutt_tunnel_socket_setup(struct Connection *conn)
 {

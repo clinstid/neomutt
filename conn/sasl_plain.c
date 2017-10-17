@@ -34,6 +34,17 @@
 #include "lib/base64.h"
 #include "lib/string2.h"
 
+/**
+ * mutt_sasl_plain_msg - XXX
+ * @param buf ZZZ
+ * @param buflen ZZZ
+ * @param cmd ZZZ
+ * @param authz ZZZ
+ * @param user ZZZ
+ * @param pass ZZZ
+ * @retval size_t  YYY
+ */
+/* sasl_plain.c */
 size_t mutt_sasl_plain_msg(char *buf, size_t buflen, const char *cmd,
                            const char *authz, const char *user, const char *pass)
 {

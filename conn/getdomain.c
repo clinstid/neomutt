@@ -39,6 +39,12 @@
 #include "lib/memory.h"
 #include "lib/string2.h"
 
+/**
+ * getdnsdomainname - XXX
+ * @param d ZZZ
+ * @param len ZZZ
+ * @retval int  YYY
+ */
 int getdnsdomainname(char *d, size_t len)
 {
   int ret = -1;
